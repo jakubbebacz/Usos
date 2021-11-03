@@ -5,11 +5,6 @@ namespace usos.API.Entities
     public class Student
     {
         public Guid StudentId { get; set; }
-        
-        public Guid DegreeCourseId { get; set; }
-
-        public virtual DegreeCourse DegreeCourse { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

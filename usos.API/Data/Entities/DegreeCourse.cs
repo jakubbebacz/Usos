@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace usos.API.Entities
 {
@@ -11,8 +10,6 @@ namespace usos.API.Entities
         
         public virtual Department Department { get; set; }
 
-        public Guid DegreeCourseName { get; set; }
-        
-        public virtual ICollection<Student> Students { get; set; }
+        public string DegreeCourseName { get; set; }
     }
 }

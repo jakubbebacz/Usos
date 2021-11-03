@@ -9,8 +9,8 @@ namespace usos.API
         {
         }
 
-        public DbSet<DegreeCourse> DegreeCourse { get; set; }
         public DbSet<Department> Department { get; set; }
+        public DbSet<DegreeCourse> DegreeCourse { get; set; }
         public DbSet<Student> Student { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) =>

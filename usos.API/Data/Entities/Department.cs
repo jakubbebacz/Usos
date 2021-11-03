@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace usos.API.Entities
 {
-    public abstract class Department
+    public class Department
     {
         public Guid DepartmentId { get; set; }
 
