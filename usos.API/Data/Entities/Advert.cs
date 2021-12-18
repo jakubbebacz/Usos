@@ -13,6 +13,6 @@ namespace usos.API.Entities
 
         public string Note { get; set; }
         
-        public DateTime Data { get; set; }
+        public DateTime Date { get; set; }
     }
 }

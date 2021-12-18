@@ -21,9 +21,11 @@ namespace usos.API.Entities
         
         public int? Semester { get; set; }
 
-        public ICollection<Application> Application { get; set; }
+        public ICollection<Application> Applications { get; set; }
         
-        public ICollection<Questionnaire> Questionnaire { get; set; }
+        public ICollection<Questionnaire> Questionnaires { get; set; }
+        
+        public ICollection<StudentSubject> StudentSubjects { get; set; }
         
     }
 }

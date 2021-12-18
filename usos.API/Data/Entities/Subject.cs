@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace usos.API.Entities
 {
@@ -6,9 +7,13 @@ namespace usos.API.Entities
     {
         public Guid SubjectId { get; set; }
 
-        public string SubjectName { get; set; }
-
         public Guid DegreeCourseId { get; set; }
         public virtual DegreeCourse DegreeCourse { get; set; }
+        
+        public string SubjectName { get; set; }
+        
+        public virtual ICollection<LecturerGroup> LecturerGroups { get; set; }
+        
+        public ICollection<StudentSubject> StudentSubjects { get; set; }
     }
 }

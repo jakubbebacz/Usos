@@ -10,5 +10,7 @@ namespace usos.API.Entities
         public string DepartmentName { get; set; }
         
         public virtual ICollection<DegreeCourse> DegreeCourses { get; set; }
+        
+        public virtual ICollection<Lecturer> Lecturers { get; set; }
     }
 }

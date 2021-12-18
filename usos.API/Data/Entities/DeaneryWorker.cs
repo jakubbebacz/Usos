@@ -17,6 +17,6 @@ namespace usos.API.Entities
         
         public string Email { get; set; }
         
-        public ICollection<Advert> Advert { get; set; }
+        public ICollection<Advert> Adverts { get; set; }
     }
 }
