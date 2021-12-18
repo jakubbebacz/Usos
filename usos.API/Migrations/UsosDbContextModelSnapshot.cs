@@ -58,10 +58,6 @@ namespace usos.API.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("application_id");
 
-                    b.Property<Guid?>("DeaneryWorkerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("deanery_worker_id");
-
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("boolean")
                         .HasColumnName("is_accepted");
@@ -84,9 +80,6 @@ namespace usos.API.Migrations
 
                     b.HasKey("ApplicationId")
                         .HasName("pk_application");
-
-                    b.HasIndex("DeaneryWorkerId")
-                        .HasDatabaseName("ix_application_deanery_worker_id");
 
                     b.HasIndex("StudentId")
                         .HasDatabaseName("ix_application_student_id");
@@ -155,15 +148,15 @@ namespace usos.API.Migrations
                     b.HasData(
                         new
                         {
-                            DegreeCourseId = new Guid("e70a16db-e990-4440-b826-964932fc1fe2"),
+                            DegreeCourseId = new Guid("4d92ef97-6a06-4b1d-9605-395e33a79e73"),
                             DegreeCourseName = "Architecture",
-                            DepartmentId = new Guid("74591e57-1aca-4ea0-bcc3-6332a66c007e")
+                            DepartmentId = new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b")
                         },
                         new
                         {
-                            DegreeCourseId = new Guid("0c5807a6-4bd5-4d9d-a00c-24711ca983c1"),
+                            DegreeCourseId = new Guid("ff38f6ef-f926-4492-84a9-a1d1b38ced4d"),
                             DegreeCourseName = "ComputerScience",
-                            DepartmentId = new Guid("e1511aea-18aa-43c1-a1ca-723159c57fae")
+                            DepartmentId = new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9")
                         });
                 });
 
@@ -188,12 +181,12 @@ namespace usos.API.Migrations
                     b.HasData(
                         new
                         {
-                            DepartmentId = new Guid("74591e57-1aca-4ea0-bcc3-6332a66c007e"),
+                            DepartmentId = new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b"),
                             DepartmentName = "WBiA"
                         },
                         new
                         {
-                            DepartmentId = new Guid("e1511aea-18aa-43c1-a1ca-723159c57fae"),
+                            DepartmentId = new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9"),
                             DepartmentName = "WeAiI"
                         });
                 });
@@ -497,11 +490,6 @@ namespace usos.API.Migrations
 
             modelBuilder.Entity("usos.API.Entities.Application", b =>
                 {
-                    b.HasOne("usos.API.Entities.DeaneryWorker", null)
-                        .WithMany("Applications")
-                        .HasForeignKey("DeaneryWorkerId")
-                        .HasConstraintName("fk_application_deanery_worker_deanery_worker_id");
-
                     b.HasOne("usos.API.Entities.Student", "Student")
                         .WithMany("Application")
                         .HasForeignKey("StudentId")
@@ -652,8 +640,6 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.DeaneryWorker", b =>
                 {
                     b.Navigation("Advert");
-
-                    b.Navigation("Applications");
                 });
 
             modelBuilder.Entity("usos.API.Entities.DegreeCourse", b =>

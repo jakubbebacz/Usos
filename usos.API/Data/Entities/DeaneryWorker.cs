@@ -16,8 +16,6 @@ namespace usos.API.Entities
         public string PhoneNumber { get; set; }
         
         public string Email { get; set; }
-
-        public ICollection<Application> Applications { get; set; }
         
         public ICollection<Advert> Advert { get; set; }
     }

@@ -225,18 +225,11 @@ namespace usos.API.Migrations
                     recipent = table.Column<Guid>(type: "uuid", nullable: false),
                     title = table.Column<string>(type: "text", nullable: true),
                     note = table.Column<string>(type: "text", nullable: true),
-                    is_accepted = table.Column<bool>(type: "boolean", nullable: false),
-                    deanery_worker_id = table.Column<Guid>(type: "uuid", nullable: true)
+                    is_accepted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_application", x => x.application_id);
-                    table.ForeignKey(
-                        name: "fk_application_deanery_worker_deanery_worker_id",
-                        column: x => x.deanery_worker_id,
-                        principalTable: "deanery_worker",
-                        principalColumn: "deanery_worker_id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "fk_application_student_student_id",
                         column: x => x.student_id,
@@ -303,8 +296,8 @@ namespace usos.API.Migrations
                 columns: new[] { "department_id", "department_name" },
                 values: new object[,]
                 {
-                    { new Guid("74591e57-1aca-4ea0-bcc3-6332a66c007e"), "WBiA" },
-                    { new Guid("e1511aea-18aa-43c1-a1ca-723159c57fae"), "WeAiI" }
+                    { new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b"), "WBiA" },
+                    { new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9"), "WeAiI" }
                 });
 
             migrationBuilder.InsertData(
@@ -312,18 +305,13 @@ namespace usos.API.Migrations
                 columns: new[] { "degree_course_id", "degree_course_name", "department_id" },
                 values: new object[,]
                 {
-                    { new Guid("e70a16db-e990-4440-b826-964932fc1fe2"), "Architecture", new Guid("74591e57-1aca-4ea0-bcc3-6332a66c007e") },
-                    { new Guid("0c5807a6-4bd5-4d9d-a00c-24711ca983c1"), "ComputerScience", new Guid("e1511aea-18aa-43c1-a1ca-723159c57fae") }
+                    { new Guid("4d92ef97-6a06-4b1d-9605-395e33a79e73"), "Architecture", new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b") },
+                    { new Guid("ff38f6ef-f926-4492-84a9-a1d1b38ced4d"), "ComputerScience", new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9") }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "ix_advert_deanery_worker_id",
                 table: "advert",
-                column: "deanery_worker_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_application_deanery_worker_id",
-                table: "application",
                 column: "deanery_worker_id");
 
             migrationBuilder.CreateIndex(
