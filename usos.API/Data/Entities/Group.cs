@@ -16,6 +16,6 @@ namespace usos.API.Entities
 
         public ICollection<Student> Students { get; set; }
         
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<Lecturer> Lecturers { get; set; }
     }
 }

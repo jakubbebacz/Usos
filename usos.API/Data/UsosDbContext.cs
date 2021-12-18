@@ -14,11 +14,12 @@ namespace usos.API
         public DbSet<Student> Student { get; set; }
         public DbSet<Advert> Advert { get; set; }
         public DbSet<Entities.Application> Application { get; set; }
-        public DbSet<Employee> Employee { get; set; }
-        public DbSet<EmployeeGroup> EmployeeGroup { get; set; }
+        public DbSet<Lecturer> Lecturer { get; set; }
+        public DbSet<Rector> Rector { get; set; }
+        public DbSet<DeaneryWorker> DeaneryWorker { get; set; }
+        public DbSet<LecturerGroup> LecturerGroup { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<Questionnaire> Questionnaire { get; set; }
-        public DbSet<Role> Role { get; set; }
         public DbSet<StudentSubject> StudentSubject { get; set; }
         public DbSet<Subject> Subject { get; set; }
 

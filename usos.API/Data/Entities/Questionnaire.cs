@@ -9,8 +9,8 @@ namespace usos.API.Entities
         public Guid StudentId { get; set; }
         public virtual Student Student { get; set; }
 
-        public Guid EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public Guid LecturerId { get; set; }
+        public virtual Lecturer Lecturer { get; set; }
 
         public string Note { get; set; }
 

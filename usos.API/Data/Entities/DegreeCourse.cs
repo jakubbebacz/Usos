@@ -14,5 +14,7 @@ namespace usos.API.Entities
         public string DegreeCourseName { get; set; }
         
         public ICollection<Subject> Subjects { get; set; }
+        
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }
