@@ -25,9 +25,6 @@ namespace usos.API.EntityTypeConfigurations
                 .IsRequired();
 
             builder.Property(x => x.PhoneNumber)
-                .IsRequired();
-
-            builder.Property(x => x.PhoneNumber)
                 .HasMaxLength(25)
                 .IsRequired();
             

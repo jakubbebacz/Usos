@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
+using usos.API.Application.IServices;
+using usos.API.Application.Services;
 
 namespace usos.API
 {
@@ -40,6 +41,8 @@ namespace usos.API
                     .UseNpgsql(Configuration.GetConnectionString("UsosDbConnectionString"))
                     .UseSnakeCaseNamingConvention()
             );
+            
+            services.AddTransient<IStudentService, StudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

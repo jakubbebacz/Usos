@@ -2,8 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using usos.API.Application.IServices;
 using usos.API.Application.Models;
-using usos.API.Entities;
 
 namespace usos.API.Application.Controllers
 {
@@ -11,11 +11,11 @@ namespace usos.API.Application.Controllers
     [Route("/api/students")]
     public class StudentController : ControllerBase
     {
-        private readonly UsosDbContext _usosDbContext;
+        private readonly IStudentService _studentService;
 
-        public StudentController(UsosDbContext usosDbContext)
+        public StudentController(IStudentService studentService)
         {
-            _usosDbContext = usosDbContext;
+            _studentService = studentService;
         }
         
         [HttpPost]
@@ -24,18 +24,8 @@ namespace usos.API.Application.Controllers
         [ProducesDefaultResponseType(typeof(Guid))]
         public async Task<IActionResult> CreateStudent([FromBody] StudentRequest request)
         {
-            var student = new Student
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                IndexNumber = request.IndexNumber
-            };
-
-            await _usosDbContext.AddAsync(student);
-            await _usosDbContext.SaveChangesAsync();
-            
-            return StatusCode(StatusCodes.Status201Created, student.StudentId);
+            var studentId = await _studentService.CreateStudent(request);
+            return StatusCode(StatusCodes.Status201Created, studentId);
         }
     }
 }
