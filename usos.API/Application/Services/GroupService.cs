@@ -1,10 +1,10 @@
 using System;
-using System.Net;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices;
 using usos.API.Application.Models.Group;
+using usos.API.Entities;
 using usos.API.Libraries;
-using Microsoft.EntityFrameworkCore;
 
 namespace usos.API.Application.Services
 {
@@ -19,7 +19,7 @@ namespace usos.API.Application.Services
         
         public async Task<Guid> CreateGroup(GroupRequest request)
         {
-            var group = new Entities.Group
+            var group = new Group
             {
                 DegreeCourseId = request.DegreeCourseId,
                 Name = request.Name.Trim(),
