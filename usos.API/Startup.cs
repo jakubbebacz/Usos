@@ -43,6 +43,8 @@ namespace usos.API
             );
             
             services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<IDeaneryWorkerService, DeaneryWorkerService>();
+            services.AddTransient<IAdvertService, AdvertService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
