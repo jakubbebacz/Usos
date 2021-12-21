@@ -12,11 +12,11 @@ namespace usos.API.Migrations
                 columns: table => new
                 {
                     deanery_worker_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    card_id = table.Column<string>(type: "text", nullable: true),
-                    first_name = table.Column<string>(type: "text", nullable: true),
-                    surname = table.Column<string>(type: "text", nullable: true),
-                    phone_number = table.Column<string>(type: "text", nullable: true),
-                    email = table.Column<string>(type: "text", nullable: true)
+                    card_id = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    surname = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    phone_number = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
+                    email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,11 +40,11 @@ namespace usos.API.Migrations
                 columns: table => new
                 {
                     rector_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    card_id = table.Column<string>(type: "text", nullable: true),
-                    first_name = table.Column<string>(type: "text", nullable: true),
-                    surname = table.Column<string>(type: "text", nullable: true),
-                    phone_number = table.Column<string>(type: "text", nullable: true),
-                    email = table.Column<string>(type: "text", nullable: true)
+                    card_id = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    surname = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    phone_number = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
+                    email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,9 +57,9 @@ namespace usos.API.Migrations
                 {
                     advert_id = table.Column<Guid>(type: "uuid", nullable: false),
                     deanery_worker_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    note = table.Column<string>(type: "text", nullable: true),
-                    data = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    note = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,13 +92,36 @@ namespace usos.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "lecturer",
+                columns: table => new
+                {
+                    lecturer_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    department_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    card_id = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    first_name = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    surname = table.Column<string>(type: "text", nullable: false),
+                    phone_number = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
+                    email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_lecturer", x => x.lecturer_id);
+                    table.ForeignKey(
+                        name: "fk_lecturer_department_department_id",
+                        column: x => x.department_id,
+                        principalTable: "department",
+                        principalColumn: "department_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "group",
                 columns: table => new
                 {
                     group_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true),
                     degree_course_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    term = table.Column<int>(type: "integer", nullable: false)
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    term = table.Column<int>(type: "integer", maxLength: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,8 +139,8 @@ namespace usos.API.Migrations
                 columns: table => new
                 {
                     subject_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    subject_name = table.Column<string>(type: "text", nullable: true),
-                    degree_course_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    degree_course_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    subject_name = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,36 +151,6 @@ namespace usos.API.Migrations
                         principalTable: "degree_course",
                         principalColumn: "degree_course_id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "lecturer",
-                columns: table => new
-                {
-                    lecturer_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    department_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    card_id = table.Column<string>(type: "text", nullable: true),
-                    first_name = table.Column<string>(type: "text", nullable: true),
-                    surname = table.Column<string>(type: "text", nullable: true),
-                    phone_number = table.Column<string>(type: "text", nullable: true),
-                    email = table.Column<string>(type: "text", nullable: true),
-                    group_id = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_lecturer", x => x.lecturer_id);
-                    table.ForeignKey(
-                        name: "fk_lecturer_department_department_id",
-                        column: x => x.department_id,
-                        principalTable: "department",
-                        principalColumn: "department_id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_lecturer_group_group_id",
-                        column: x => x.group_id,
-                        principalTable: "group",
-                        principalColumn: "group_id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,10 +215,10 @@ namespace usos.API.Migrations
                 {
                     application_id = table.Column<Guid>(type: "uuid", nullable: false),
                     student_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    recipent = table.Column<Guid>(type: "uuid", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    note = table.Column<string>(type: "text", nullable: true),
-                    is_accepted = table.Column<bool>(type: "boolean", nullable: false)
+                    recipent = table.Column<Guid>(type: "uuid", maxLength: 50, nullable: false),
+                    title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    note = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    is_accepted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -245,8 +238,8 @@ namespace usos.API.Migrations
                     questionnaire_id = table.Column<Guid>(type: "uuid", nullable: false),
                     student_id = table.Column<Guid>(type: "uuid", nullable: false),
                     lecturer_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    note = table.Column<string>(type: "text", nullable: true),
-                    rating = table.Column<int>(type: "integer", nullable: false)
+                    note = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    rating = table.Column<int>(type: "integer", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -272,7 +265,7 @@ namespace usos.API.Migrations
                     student_subject_id = table.Column<Guid>(type: "uuid", nullable: false),
                     student_id = table.Column<Guid>(type: "uuid", nullable: false),
                     subject_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    marks = table.Column<double[]>(type: "double precision[]", nullable: true)
+                    marks = table.Column<double[]>(type: "double precision[]", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -285,7 +278,7 @@ namespace usos.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "fk_student_subject_subject_subject_id",
-                        column: x => x.subject_id,
+                        column: x => x.student_id,
                         principalTable: "subject",
                         principalColumn: "subject_id",
                         onDelete: ReferentialAction.Cascade);
@@ -296,17 +289,37 @@ namespace usos.API.Migrations
                 columns: new[] { "department_id", "department_name" },
                 values: new object[,]
                 {
-                    { new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b"), "WBiA" },
-                    { new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9"), "WeAiI" }
+                    { new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7"), "ISGiE" },
+                    { new Guid("e3757241-42e2-4f61-a358-f1c8e9699b13"), "WBiA" },
+                    { new Guid("1e19b000-cf2b-4e48-ab46-72fef4ccac7c"), "WMiBM" },
+                    { new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650"), "WEAiI" },
+                    { new Guid("daed2e1e-f52f-4e53-a7e8-e3398630f404"), "WZiMK" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "rector",
+                columns: new[] { "rector_id", "card_id", "email", "first_name", "phone_number", "surname" },
+                values: new object[] { new Guid("0912ef3e-a9e6-49f0-a11d-2924609f7fc1"), "000000", "admin@admin.com", "Admin", "000000000", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "degree_course",
                 columns: new[] { "degree_course_id", "degree_course_name", "department_id" },
                 values: new object[,]
                 {
-                    { new Guid("4d92ef97-6a06-4b1d-9605-395e33a79e73"), "Architecture", new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b") },
-                    { new Guid("ff38f6ef-f926-4492-84a9-a1d1b38ced4d"), "ComputerScience", new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9") }
+                    { new Guid("109f7f43-f17f-4de5-ac1e-b14a462fb447"), "Geodezja i kartografia", new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7") },
+                    { new Guid("40a4b8b9-5432-4854-84ec-704af9aaa382"), "Inżynieria środowiska", new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7") },
+                    { new Guid("c1db08e1-25fb-4e92-ad6a-e1d797d98cb7"), "Odnawialne źródła energii", new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7") },
+                    { new Guid("efdf7a83-a087-4572-bca3-01968464a5c5"), "Architektura", new Guid("e3757241-42e2-4f61-a358-f1c8e9699b13") },
+                    { new Guid("313f8bfd-d643-44dc-b2fb-f7c84979bdc8"), "Budownictwo", new Guid("e3757241-42e2-4f61-a358-f1c8e9699b13") },
+                    { new Guid("3bbd35cc-7727-4f2f-997d-96e254157eda"), "Automatyka i robotyka", new Guid("1e19b000-cf2b-4e48-ab46-72fef4ccac7c") },
+                    { new Guid("fd1ee5e5-1bfd-4b6c-99fc-21ca4c7144ef"), "Mechanika i budowa maszyn", new Guid("1e19b000-cf2b-4e48-ab46-72fef4ccac7c") },
+                    { new Guid("2a848f15-b441-4c1c-aa3c-d296db507644"), "Elektromobilność", new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650") },
+                    { new Guid("8133ad4f-6522-407f-a91a-97549da65c18"), "Elektrotechnika", new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650") },
+                    { new Guid("e05f28ea-85e5-477f-9f95-5f731c38a36a"), "Energetyka", new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650") },
+                    { new Guid("6c535e65-8d67-4fd0-b4b1-6eaeb8af34c4"), "Informatyka", new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650") },
+                    { new Guid("c077047c-f985-44d4-9d2d-f21cd3571f21"), "Teleinformatyka", new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650") },
+                    { new Guid("7514321c-d664-47ab-b522-3f4e17d41403"), "Ekonomia", new Guid("daed2e1e-f52f-4e53-a7e8-e3398630f404") },
+                    { new Guid("82e3b4d8-a54f-40a0-a1a4-fd21d6c9ef21"), "Logistyka", new Guid("daed2e1e-f52f-4e53-a7e8-e3398630f404") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -333,11 +346,6 @@ namespace usos.API.Migrations
                 name: "ix_lecturer_department_id",
                 table: "lecturer",
                 column: "department_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_lecturer_group_id",
-                table: "lecturer",
-                column: "group_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_lecturer_group_group_id",
@@ -373,11 +381,6 @@ namespace usos.API.Migrations
                 name: "ix_student_subject_student_id",
                 table: "student_subject",
                 column: "student_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_student_subject_subject_id",
-                table: "student_subject",
-                column: "subject_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_subject_degree_course_id",

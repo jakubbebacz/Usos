@@ -10,7 +10,7 @@ using usos.API;
 namespace usos.API.Migrations
 {
     [DbContext(typeof(UsosDbContext))]
-    [Migration("20211218141826_init")]
+    [Migration("20211221203031_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,20 +28,24 @@ namespace usos.API.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("advert_id");
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone")
-                        .HasColumnName("data");
+                        .HasColumnName("date");
 
                     b.Property<Guid>("DeaneryWorkerId")
                         .HasColumnType("uuid")
                         .HasColumnName("deanery_worker_id");
 
                     b.Property<string>("Note")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)")
                         .HasColumnName("note");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("title");
 
                     b.HasKey("AdvertId")
@@ -61,14 +65,19 @@ namespace usos.API.Migrations
                         .HasColumnName("application_id");
 
                     b.Property<bool>("IsAccepted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("is_accepted");
 
                     b.Property<string>("Note")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("note");
 
                     b.Property<Guid>("Recipent")
+                        .HasMaxLength(50)
                         .HasColumnType("uuid")
                         .HasColumnName("recipent");
 
@@ -77,7 +86,9 @@ namespace usos.API.Migrations
                         .HasColumnName("student_id");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("title");
 
                     b.HasKey("ApplicationId")
@@ -97,23 +108,33 @@ namespace usos.API.Migrations
                         .HasColumnName("deanery_worker_id");
 
                     b.Property<string>("CardId")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("card_id");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("first_name");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
                         .HasColumnName("phone_number");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("surname");
 
                     b.HasKey("DeaneryWorkerId")
@@ -150,15 +171,87 @@ namespace usos.API.Migrations
                     b.HasData(
                         new
                         {
-                            DegreeCourseId = new Guid("4d92ef97-6a06-4b1d-9605-395e33a79e73"),
-                            DegreeCourseName = "Architecture",
-                            DepartmentId = new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b")
+                            DegreeCourseId = new Guid("efdf7a83-a087-4572-bca3-01968464a5c5"),
+                            DegreeCourseName = "Architektura",
+                            DepartmentId = new Guid("e3757241-42e2-4f61-a358-f1c8e9699b13")
                         },
                         new
                         {
-                            DegreeCourseId = new Guid("ff38f6ef-f926-4492-84a9-a1d1b38ced4d"),
-                            DegreeCourseName = "ComputerScience",
-                            DepartmentId = new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9")
+                            DegreeCourseId = new Guid("313f8bfd-d643-44dc-b2fb-f7c84979bdc8"),
+                            DegreeCourseName = "Budownictwo",
+                            DepartmentId = new Guid("e3757241-42e2-4f61-a358-f1c8e9699b13")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("2a848f15-b441-4c1c-aa3c-d296db507644"),
+                            DegreeCourseName = "Elektromobilność",
+                            DepartmentId = new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("8133ad4f-6522-407f-a91a-97549da65c18"),
+                            DegreeCourseName = "Elektrotechnika",
+                            DepartmentId = new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("e05f28ea-85e5-477f-9f95-5f731c38a36a"),
+                            DegreeCourseName = "Energetyka",
+                            DepartmentId = new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("6c535e65-8d67-4fd0-b4b1-6eaeb8af34c4"),
+                            DegreeCourseName = "Informatyka",
+                            DepartmentId = new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("c077047c-f985-44d4-9d2d-f21cd3571f21"),
+                            DegreeCourseName = "Teleinformatyka",
+                            DepartmentId = new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("109f7f43-f17f-4de5-ac1e-b14a462fb447"),
+                            DegreeCourseName = "Geodezja i kartografia",
+                            DepartmentId = new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("40a4b8b9-5432-4854-84ec-704af9aaa382"),
+                            DegreeCourseName = "Inżynieria środowiska",
+                            DepartmentId = new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("c1db08e1-25fb-4e92-ad6a-e1d797d98cb7"),
+                            DegreeCourseName = "Odnawialne źródła energii",
+                            DepartmentId = new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("3bbd35cc-7727-4f2f-997d-96e254157eda"),
+                            DegreeCourseName = "Automatyka i robotyka",
+                            DepartmentId = new Guid("1e19b000-cf2b-4e48-ab46-72fef4ccac7c")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("fd1ee5e5-1bfd-4b6c-99fc-21ca4c7144ef"),
+                            DegreeCourseName = "Mechanika i budowa maszyn",
+                            DepartmentId = new Guid("1e19b000-cf2b-4e48-ab46-72fef4ccac7c")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("7514321c-d664-47ab-b522-3f4e17d41403"),
+                            DegreeCourseName = "Ekonomia",
+                            DepartmentId = new Guid("daed2e1e-f52f-4e53-a7e8-e3398630f404")
+                        },
+                        new
+                        {
+                            DegreeCourseId = new Guid("82e3b4d8-a54f-40a0-a1a4-fd21d6c9ef21"),
+                            DegreeCourseName = "Logistyka",
+                            DepartmentId = new Guid("daed2e1e-f52f-4e53-a7e8-e3398630f404")
                         });
                 });
 
@@ -183,13 +276,28 @@ namespace usos.API.Migrations
                     b.HasData(
                         new
                         {
-                            DepartmentId = new Guid("8eea9cac-595d-467e-9e46-86c32ae5e14b"),
+                            DepartmentId = new Guid("87a0557a-68ca-4cbc-854d-1674f52158e7"),
+                            DepartmentName = "ISGiE"
+                        },
+                        new
+                        {
+                            DepartmentId = new Guid("e3757241-42e2-4f61-a358-f1c8e9699b13"),
                             DepartmentName = "WBiA"
                         },
                         new
                         {
-                            DepartmentId = new Guid("7a6d3e78-7ca5-441d-807c-02f099d5c1b9"),
-                            DepartmentName = "WeAiI"
+                            DepartmentId = new Guid("1e19b000-cf2b-4e48-ab46-72fef4ccac7c"),
+                            DepartmentName = "WMiBM"
+                        },
+                        new
+                        {
+                            DepartmentId = new Guid("9ab8c1c2-2139-4998-9250-e02ad7123650"),
+                            DepartmentName = "WEAiI"
+                        },
+                        new
+                        {
+                            DepartmentId = new Guid("daed2e1e-f52f-4e53-a7e8-e3398630f404"),
+                            DepartmentName = "WZiMK"
                         });
                 });
 
@@ -205,10 +313,13 @@ namespace usos.API.Migrations
                         .HasColumnName("degree_course_id");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
                     b.Property<int>("Term")
+                        .HasMaxLength(2)
                         .HasColumnType("integer")
                         .HasColumnName("term");
 
@@ -229,7 +340,9 @@ namespace usos.API.Migrations
                         .HasColumnName("lecturer_id");
 
                     b.Property<string>("CardId")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("card_id");
 
                     b.Property<Guid>("DepartmentId")
@@ -237,22 +350,25 @@ namespace usos.API.Migrations
                         .HasColumnName("department_id");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)")
                         .HasColumnName("first_name");
 
-                    b.Property<Guid?>("GroupId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("group_id");
-
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
                         .HasColumnName("phone_number");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("surname");
 
@@ -261,9 +377,6 @@ namespace usos.API.Migrations
 
                     b.HasIndex("DepartmentId")
                         .HasDatabaseName("ix_lecturer_department_id");
-
-                    b.HasIndex("GroupId")
-                        .HasDatabaseName("ix_lecturer_group_id");
 
                     b.ToTable("lecturer");
                 });
@@ -314,10 +427,13 @@ namespace usos.API.Migrations
                         .HasColumnName("lecturer_id");
 
                     b.Property<string>("Note")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)")
                         .HasColumnName("note");
 
                     b.Property<int>("Rating")
+                        .HasMaxLength(10)
                         .HasColumnType("integer")
                         .HasColumnName("rating");
 
@@ -345,29 +461,50 @@ namespace usos.API.Migrations
                         .HasColumnName("rector_id");
 
                     b.Property<string>("CardId")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("card_id");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("first_name");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
                         .HasColumnName("phone_number");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("surname");
 
                     b.HasKey("RectorId")
                         .HasName("pk_rector");
 
                     b.ToTable("rector");
+
+                    b.HasData(
+                        new
+                        {
+                            RectorId = new Guid("0912ef3e-a9e6-49f0-a11d-2924609f7fc1"),
+                            CardId = "000000",
+                            Email = "admin@admin.com",
+                            FirstName = "Admin",
+                            PhoneNumber = "000000000",
+                            Surname = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("usos.API.Entities.Student", b =>
@@ -431,6 +568,7 @@ namespace usos.API.Migrations
                         .HasColumnName("student_subject_id");
 
                     b.Property<double[]>("Marks")
+                        .HasMaxLength(100)
                         .HasColumnType("double precision[]")
                         .HasColumnName("marks");
 
@@ -448,9 +586,6 @@ namespace usos.API.Migrations
                     b.HasIndex("StudentId")
                         .HasDatabaseName("ix_student_subject_student_id");
 
-                    b.HasIndex("SubjectId")
-                        .HasDatabaseName("ix_student_subject_subject_id");
-
                     b.ToTable("student_subject");
                 });
 
@@ -466,7 +601,9 @@ namespace usos.API.Migrations
                         .HasColumnName("degree_course_id");
 
                     b.Property<string>("SubjectName")
-                        .HasColumnType("text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)")
                         .HasColumnName("subject_name");
 
                     b.HasKey("SubjectId")
@@ -481,7 +618,7 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.Advert", b =>
                 {
                     b.HasOne("usos.API.Entities.DeaneryWorker", "DeaneryWorker")
-                        .WithMany("Advert")
+                        .WithMany("Adverts")
                         .HasForeignKey("DeaneryWorkerId")
                         .HasConstraintName("fk_advert_deanery_worker_deanery_worker_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -493,7 +630,7 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.Application", b =>
                 {
                     b.HasOne("usos.API.Entities.Student", "Student")
-                        .WithMany("Application")
+                        .WithMany("Applications")
                         .HasForeignKey("StudentId")
                         .HasConstraintName("fk_application_student_student_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -529,16 +666,11 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.Lecturer", b =>
                 {
                     b.HasOne("usos.API.Entities.Department", "Department")
-                        .WithMany()
+                        .WithMany("Lecturers")
                         .HasForeignKey("DepartmentId")
                         .HasConstraintName("fk_lecturer_department_department_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("usos.API.Entities.Group", null)
-                        .WithMany("Lecturers")
-                        .HasForeignKey("GroupId")
-                        .HasConstraintName("fk_lecturer_group_group_id");
 
                     b.Navigation("Department");
                 });
@@ -546,21 +678,21 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.LecturerGroup", b =>
                 {
                     b.HasOne("usos.API.Entities.Group", "Group")
-                        .WithMany()
+                        .WithMany("LecturerGroups")
                         .HasForeignKey("GroupId")
                         .HasConstraintName("fk_lecturer_group_group_group_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("usos.API.Entities.Lecturer", "Lecturer")
-                        .WithMany()
+                        .WithMany("LecturerGroups")
                         .HasForeignKey("LecturerId")
                         .HasConstraintName("fk_lecturer_group_lecturer_lecturer_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("usos.API.Entities.Subject", "Subject")
-                        .WithMany()
+                        .WithMany("LecturerGroups")
                         .HasForeignKey("SubjectId")
                         .HasConstraintName("fk_lecturer_group_subject_subject_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -576,14 +708,14 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.Questionnaire", b =>
                 {
                     b.HasOne("usos.API.Entities.Lecturer", "Lecturer")
-                        .WithMany()
+                        .WithMany("Questionnaires")
                         .HasForeignKey("LecturerId")
                         .HasConstraintName("fk_questionnaire_lecturer_lecturer_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("usos.API.Entities.Student", "Student")
-                        .WithMany("Questionnaire")
+                        .WithMany("Questionnaires")
                         .HasForeignKey("StudentId")
                         .HasConstraintName("fk_questionnaire_student_student_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -609,15 +741,15 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.StudentSubject", b =>
                 {
                     b.HasOne("usos.API.Entities.Student", "Student")
-                        .WithMany()
+                        .WithMany("StudentSubjects")
                         .HasForeignKey("StudentId")
                         .HasConstraintName("fk_student_subject_student_student_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("usos.API.Entities.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
+                        .WithMany("StudentSubjects")
+                        .HasForeignKey("StudentId")
                         .HasConstraintName("fk_student_subject_subject_subject_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -641,7 +773,7 @@ namespace usos.API.Migrations
 
             modelBuilder.Entity("usos.API.Entities.DeaneryWorker", b =>
                 {
-                    b.Navigation("Advert");
+                    b.Navigation("Adverts");
                 });
 
             modelBuilder.Entity("usos.API.Entities.DegreeCourse", b =>
@@ -654,20 +786,38 @@ namespace usos.API.Migrations
             modelBuilder.Entity("usos.API.Entities.Department", b =>
                 {
                     b.Navigation("DegreeCourses");
+
+                    b.Navigation("Lecturers");
                 });
 
             modelBuilder.Entity("usos.API.Entities.Group", b =>
                 {
-                    b.Navigation("Lecturers");
+                    b.Navigation("LecturerGroups");
 
                     b.Navigation("Students");
                 });
 
+            modelBuilder.Entity("usos.API.Entities.Lecturer", b =>
+                {
+                    b.Navigation("LecturerGroups");
+
+                    b.Navigation("Questionnaires");
+                });
+
             modelBuilder.Entity("usos.API.Entities.Student", b =>
                 {
-                    b.Navigation("Application");
+                    b.Navigation("Applications");
 
-                    b.Navigation("Questionnaire");
+                    b.Navigation("Questionnaires");
+
+                    b.Navigation("StudentSubjects");
+                });
+
+            modelBuilder.Entity("usos.API.Entities.Subject", b =>
+                {
+                    b.Navigation("LecturerGroups");
+
+                    b.Navigation("StudentSubjects");
                 });
 #pragma warning restore 612, 618
         }
