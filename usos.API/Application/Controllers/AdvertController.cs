@@ -28,5 +28,23 @@ namespace usos.API.Application.Controllers
             var advertId = await _advertService.CreateAdvert(request);
             return StatusCode(StatusCodes.Status201Created, advertId);
         }
+        
+        [HttpPut]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateAdvert([FromQuery] Guid advertId, [FromBody] AdvertRequest request)
+        {
+            await _advertService.UpdateAdvert(advertId ,request);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+        
+        [HttpDelete]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteAdvert([FromQuery] Guid advertId)
+        {
+            await _advertService.DeleteAdvert(advertId);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
     }
 }

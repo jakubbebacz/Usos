@@ -27,5 +27,23 @@ namespace usos.API.Application.Controllers
             var deaneryWorkerId = await _deaneryWorkerService.CreateDeaneryWorker(request);
             return StatusCode(StatusCodes.Status201Created, deaneryWorkerId);
         }
+        
+        [HttpPut]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateDeaneryWorker([FromQuery] Guid deaneryWorkerId, [FromBody] DeaneryWorkerRequest request)
+        {
+            await _deaneryWorkerService.UpdateDeaneryWorker(deaneryWorkerId ,request);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+        
+        [HttpDelete]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteDeaneryWorker([FromQuery] Guid deaneryWorkerId)
+        {
+            await _deaneryWorkerService.DeleteDeaneryWorker(deaneryWorkerId);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
     }
 }

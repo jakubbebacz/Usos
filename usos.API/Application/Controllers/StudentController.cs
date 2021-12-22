@@ -27,5 +27,23 @@ namespace usos.API.Application.Controllers
             var studentId = await _studentService.CreateStudent(request);
             return StatusCode(StatusCodes.Status201Created, studentId);
         }
+        
+        [HttpPut]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateStudent([FromQuery] Guid studentId, [FromBody] StudentRequest request)
+        {
+            await _studentService.UpdateStudent(studentId ,request);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+        
+        [HttpDelete]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteStudent([FromQuery] Guid studentId)
+        {
+            await _studentService.DeleteStudent(studentId);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
     }
 }

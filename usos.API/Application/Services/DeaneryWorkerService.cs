@@ -60,8 +60,8 @@ namespace usos.API.Application.Services
             {
                 throw new Exception("Deanery worker was not found");
             }
-            
-            
+
+            _usosDbContext.DeaneryWorker.Remove(deaneryWorker);
         }
     }
 }
