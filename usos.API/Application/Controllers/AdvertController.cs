@@ -8,41 +8,42 @@ using usos.API.Application.Models;
 namespace usos.API.Application.Controllers
 {
     [ApiController]
-    [Route("/api/students")]
-    public class StudentController : ControllerBase
+    [Route("/api/adverts")]
+    public class AdvertController : ControllerBase
     {
-        private readonly IStudentService _studentService;
+        private readonly IAdvertService _advertService;
 
-        public StudentController(IStudentService studentService)
+        public AdvertController(IAdvertService advertService)
         {
-            _studentService = studentService;
+            _advertService = advertService;
         }
-        
+
+
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
-        public async Task<IActionResult> CreateStudent([FromBody] StudentRequest request)
+        public async Task<IActionResult> CreateAdvert([FromBody] AdvertRequest request)
         {
-            var studentId = await _studentService.CreateStudent(request);
-            return StatusCode(StatusCodes.Status201Created, studentId);
+            var advertId = await _advertService.CreateAdvert(request);
+            return StatusCode(StatusCodes.Status201Created, advertId);
         }
         
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateStudent([FromQuery] Guid studentId, [FromBody] StudentRequest request)
+        public async Task<IActionResult> UpdateAdvert([FromQuery] Guid advertId, [FromBody] AdvertRequest request)
         {
-            await _studentService.UpdateStudent(studentId ,request);
+            await _advertService.UpdateAdvert(advertId ,request);
             return StatusCode(StatusCodes.Status204NoContent);
         }
         
         [HttpDelete]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteStudent([FromQuery] Guid studentId)
+        public async Task<IActionResult> DeleteAdvert([FromQuery] Guid advertId)
         {
-            await _studentService.DeleteStudent(studentId);
+            await _advertService.DeleteAdvert(advertId);
             return StatusCode(StatusCodes.Status204NoContent);
         }
     }

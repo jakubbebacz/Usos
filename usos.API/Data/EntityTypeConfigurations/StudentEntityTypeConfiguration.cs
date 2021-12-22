@@ -11,12 +11,17 @@ namespace usos.API.EntityTypeConfigurations
             builder.HasKey(x => x.StudentId);
             builder.Property(x => x.StudentId)
                 .IsRequired();
+            
+            builder.HasOne(x => x.Group)
+                .WithMany(x => x.Students)
+                .HasForeignKey(x => x.GroupId)
+                .IsRequired();
 
             builder.Property(x => x.FirstName)
                 .HasMaxLength(50)
                 .IsRequired();
             
-            builder.Property(x => x.LastName)
+            builder.Property(x => x.Surname)
                 .HasMaxLength(50)
                 .IsRequired();
             

@@ -1,13 +1,15 @@
 using FluentValidation;
 using usos.API.Application.Models;
+using usos.API.Entities;
 
 namespace usos.API.Application.Validators
 {
-    public class StudentRequestValidator : AbstractValidator<StudentRequest>
+    public class DeaneryWorkerRequestValidator : AbstractValidator<DeaneryWorkerRequest>
     {
-        public StudentRequestValidator()
+        public DeaneryWorkerRequestValidator()
         {
-            RuleFor(x => x.GroupId)
+            RuleFor(x => x.CardId)
+                .MaximumLength(50)
                 .NotEmpty();
             
             RuleFor(x => x.FirstName)
@@ -17,15 +19,14 @@ namespace usos.API.Application.Validators
             RuleFor(x => x.Surname)
                 .MaximumLength(50)
                 .NotEmpty();
+            
+            RuleFor(x => x.PhoneNumber)
+                .MaximumLength(25)
+                .NotEmpty();
 
             RuleFor(x => x.Email)
                 .MaximumLength(100)
                 .EmailAddress()
-                .NotEmpty();
-
-            RuleFor(x => x.IndexNumber)
-                .GreaterThan(0)
-                .LessThanOrEqualTo(999999999)
                 .NotEmpty();
         }
     }

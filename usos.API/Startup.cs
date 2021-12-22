@@ -43,6 +43,10 @@ namespace usos.API
                     .UseNpgsql(Configuration.GetConnectionString("UsosDbConnectionString"))
                     .UseSnakeCaseNamingConvention()
             );
+            
+            services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<IDeaneryWorkerService, DeaneryWorkerService>();
+            services.AddTransient<IAdvertService, AdvertService>();
 
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<ILecturerService, LecturerService>();
