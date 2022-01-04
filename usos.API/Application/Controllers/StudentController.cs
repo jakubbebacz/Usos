@@ -18,6 +18,15 @@ namespace usos.API.Application.Controllers
             _studentService = studentService;
         }
         
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType(typeof(PaginationResponse<StudentPaginationResponse>))]
+        public async Task<IActionResult> GetUsers([FromQuery] StudentPaginationRequest request)
+        {
+            return Ok(await _studentService.GetStudents(request));
+        }
+        
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
