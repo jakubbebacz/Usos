@@ -2,8 +2,10 @@ using System;
 
 namespace usos.API.Application.Models
 {
-    public class StudentRequest
+    public class StudentPaginationResponse
     {
+        public Guid StudentId { get; set; }
+        
         public Guid GroupId { get; set; }
         
         public string FirstName { get; set; }

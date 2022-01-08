@@ -62,6 +62,7 @@ namespace usos.API.Application.Services
             }
 
             _usosDbContext.DeaneryWorker.Remove(deaneryWorker);
+            await _usosDbContext.SaveChangesAsync();
         }
     }
 }
