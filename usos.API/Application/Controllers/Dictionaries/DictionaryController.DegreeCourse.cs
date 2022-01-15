@@ -1,23 +1,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using usos.API.Application.IServices.DegreeCourse;
 using usos.API.Application.Models;
 
-namespace usos.API.Application.Controllers.DegreeCourse
+namespace usos.API.Application.Controllers.Dictionaries
 {
-    [ApiController]
     [Route("/api/degree-courses")]
-    public class DegreeCourseDictionaryController : ControllerBase
+    public partial class DictionariesController
     {
-        private readonly IDegreeCourseDictionaryService _degreeCourseDictionaryService;
-
-        public DegreeCourseDictionaryController(IDegreeCourseDictionaryService degreeCourseDictionaryService)
-        {
-            _degreeCourseDictionaryService = degreeCourseDictionaryService;
-        }
-        
-        [HttpGet]
+        [HttpGet("degree-courses")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(PaginationResponse<DictionaryResponse>))]
