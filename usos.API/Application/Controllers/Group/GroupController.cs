@@ -6,7 +6,7 @@ using usos.API.Application.IServices;
 using usos.API.Application.Models.Group;
 using usos.API.Libraries;
 
-namespace usos.API.Application.Controllers
+namespace usos.API.Application.Controllers.Group
 {
 
     [ApiController]

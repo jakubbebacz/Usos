@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
 
-namespace usos.API.Application.Controllers
+namespace usos.API.Application.Controllers.Advert
 {
     [ApiController]
     [Route("/api/adverts")]
@@ -18,6 +18,14 @@ namespace usos.API.Application.Controllers
             _advertService = advertService;
         }
 
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType(typeof(PaginationResponse<AdvertPaginationResponse>))]
+        public async Task<IActionResult> GetAdverts([FromQuery] PaginationRequest request)
+        {
+            return Ok(await _advertService.GetAdverts(request));
+        }
 
         [HttpPost]
         [Produces("application/json")]

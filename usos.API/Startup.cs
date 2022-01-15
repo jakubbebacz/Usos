@@ -8,7 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using usos.API.Application.IServices;
+using usos.API.Application.IServices.DegreeCourse;
 using usos.API.Application.Services;
+using usos.API.Application.Services.DegreeCourse;
 using usos.API.Libraries;
 
 namespace usos.API
@@ -50,6 +52,7 @@ namespace usos.API
 
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<ILecturerService, LecturerService>();
+            services.AddTransient<IDegreeCourseDictionaryService, DegreeCourseDictionaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

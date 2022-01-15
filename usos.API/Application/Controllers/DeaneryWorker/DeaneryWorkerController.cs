@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
 
-namespace usos.API.Application.Controllers
+namespace usos.API.Application.Controllers.DeaneryWorker
 {
     [ApiController]
     [Route("/api/deaneryWorkers")]

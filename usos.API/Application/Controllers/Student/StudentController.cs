@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
 
-namespace usos.API.Application.Controllers
+namespace usos.API.Application.Controllers.Student
 {
     [ApiController]
     [Route("/api/students")]
@@ -25,6 +25,15 @@ namespace usos.API.Application.Controllers
         public async Task<IActionResult> GetUsers([FromQuery] StudentPaginationRequest request)
         {
             return Ok(await _studentService.GetStudents(request));
+        }
+        
+        [HttpGet("/{studentId:guid}/subjects")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType(typeof(StudentSubjectsResponse))]
+        public async Task<IActionResult> GetUsers([FromRoute] Guid studentId)
+        {
+            return Ok(await _studentService.GetStudentSubjects(studentId));
         }
         
         [HttpPost]

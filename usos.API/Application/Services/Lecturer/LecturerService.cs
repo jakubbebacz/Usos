@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using usos.API.Application.IServices;
 using usos.API.Application.Models.Lecturer;
 using usos.API.Libraries;
 using Microsoft.EntityFrameworkCore;
+using usos.API.Application.Models;
+using usos.API.Extensions;
 
 namespace usos.API.Application.Services
 {
@@ -16,6 +19,35 @@ namespace usos.API.Application.Services
             _usosDbContext = usosDbContext;
         }
 
+        public async Task<PaginationResponse<LecturerPaginationResponse>> GetLecturers(LecturerPaginationRequest request)
+        {
+            var query = _usosDbContext.Lecturer.AsNoTracking();
+            
+            if (!string.IsNullOrWhiteSpace(request.Phrase))
+            {
+                query = query.Where(x =>
+                    (x.FirstName.ToLower() + " " + x.Surname.ToLower()).Contains(request.Phrase.ToLower())
+                    || x.Email.Contains(request.Phrase));
+            }
+
+            query = query.OrderByRequest(request.SortBy, request.SortDir);
+
+            return new PaginationResponse<LecturerPaginationResponse>
+            {
+                List = await query.Skip(request.Skip)
+                    .Take(request.Take)
+                    .Select(x => new LecturerPaginationResponse
+                    {
+                        LecturerId = x.LecturerId,
+                        FirstName = x.FirstName,
+                        Surname = x.Surname,
+                        Email = x.Email,
+                    })
+                    .ToListAsync(),
+                TotalCount = await query.CountAsync()
+            };
+        }
+        
         public async Task<Guid> CreateLecturer(LecturerRequest request)
         {
             var lecturer = new Entities.Lecturer

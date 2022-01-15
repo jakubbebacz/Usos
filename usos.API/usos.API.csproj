@@ -22,6 +22,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Application\Models\Subject" />
+      <Folder Include="Application\Validators\Group" />
+      <Folder Include="Application\Validators\Lecturer" />
       <Folder Include="Migrations" />
     </ItemGroup>
 

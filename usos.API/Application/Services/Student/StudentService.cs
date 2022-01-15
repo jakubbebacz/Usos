@@ -49,6 +49,22 @@ namespace usos.API.Application.Services
             };
         }
 
+        public async Task<StudentSubjectsResponse> GetStudentSubjects(Guid studentId)
+        {
+            var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
+
+            if (student == null)
+            {
+                throw new Exception("Student was not found");
+            }
+            
+            var subjects = student.StudentSubjects.Select(x => x.Subject);
+            return new StudentSubjectsResponse
+            {
+                Subjects = subjects.ToList()
+            };
+        }
+
         public async Task<Guid> CreateStudent(StudentRequest request)
         {
             var student = new Student
@@ -71,8 +87,14 @@ namespace usos.API.Application.Services
 
             if (student == null)
             {
-                throw new Exception("Deanery worker was not found");
+                throw new Exception("Student was not found");
             }
+
+            student.FirstName = request.FirstName;
+            student.Surname = request.Surname;
+            student.Email = request.Email;
+
+            await _usosDbContext.SaveChangesAsync();
         }
 
         public async Task DeleteStudent(Guid studentId)
@@ -82,10 +104,11 @@ namespace usos.API.Application.Services
 
             if (student == null)
             {
-                throw new Exception("Deanery worker was not found");
+                throw new Exception("Student was not found");
             }
 
             _usosDbContext.Student.Remove(student);
+            await _usosDbContext.SaveChangesAsync();
         }
     }
 }

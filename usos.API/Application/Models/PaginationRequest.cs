@@ -1,3 +1,5 @@
+using System;
+using System.Linq.Expressions;
 using usos.API.Extensions;
 
 namespace usos.API.Application.Models

@@ -7,6 +7,8 @@ namespace usos.API.Application.IServices
     public interface IStudentService
     {
         Task<PaginationResponse<StudentPaginationResponse>> GetStudents(StudentPaginationRequest request);
+
+        Task<StudentSubjectsResponse> GetStudentSubjects(Guid studentId);
         
         Task<Guid> CreateStudent(StudentRequest request);
 

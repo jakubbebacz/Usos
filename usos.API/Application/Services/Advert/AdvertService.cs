@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
 using usos.API.Entities;
+using usos.API.Extensions;
 
 namespace usos.API.Application.Services
 {
@@ -14,6 +16,25 @@ namespace usos.API.Application.Services
         public AdvertService(UsosDbContext usosDbContext)
         {
             _usosDbContext = usosDbContext;
+        }
+
+        public async Task<PaginationResponse<AdvertPaginationResponse>> GetAdverts(PaginationRequest request)
+        {
+            var query = _usosDbContext.Advert.AsNoTracking();
+            query = query.OrderByRequest(request.SortBy, request.SortDir);
+            return new PaginationResponse<AdvertPaginationResponse>
+            {
+                List = await query.Skip(request.Skip)
+                    .Take(request.Take)
+                    .Select(x => new AdvertPaginationResponse
+                    {
+                        AdvertId = x.AdvertId,
+                        Title = x.Title,
+                        Note = x.Note,
+                        Date = x.Date
+                    }).ToListAsync(),
+                TotalCount = await query.CountAsync()
+            };
         }
 
         public async Task<Guid> CreateAdvert(AdvertRequest request)

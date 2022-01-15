@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
+using usos.API.Application.Models;
 using usos.API.Application.Models.Lecturer;
 using usos.API.Libraries;
 
-namespace usos.API.Application.Controllers
+namespace usos.API.Application.Controllers.Lecturer
 {
     [ApiController]
     [Route("api/lecturers")]
@@ -17,6 +18,15 @@ namespace usos.API.Application.Controllers
         public LecturerController(ILecturerService lecturerService)
         {
             _lecturerService = lecturerService;
+        }
+        
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType(typeof(PaginationResponse<LecturerPaginationResponse>))]
+        public async Task<IActionResult> GetUsers([FromQuery] LecturerPaginationRequest request)
+        {
+            return Ok(await _lecturerService.GetLecturers(request));
         }
 
         [HttpPost]
