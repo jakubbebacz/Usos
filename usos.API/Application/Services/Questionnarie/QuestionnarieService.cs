@@ -23,6 +23,13 @@ namespace usos.API.Application.Services.Questionnarie
         QuestionnariePaginationRequest request)
     {
         var query = _usosDbContext.Questionnaire.AsNoTracking();
+        
+        if (!string.IsNullOrWhiteSpace(request.Phrase))
+        {
+            query = query.Where(x =>
+                (x.Lecturer.FirstName.ToLower() + " " + x.Lecturer.Surname.ToLower())
+                .Contains(request.Phrase.ToLower()));
+        }
 
         return new PaginationResponse<QuestionnariePaginationResponse>
         {
