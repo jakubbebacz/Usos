@@ -9,8 +9,10 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using usos.API.Application.IServices;
 using usos.API.Application.IServices.DegreeCourse;
+using usos.API.Application.IServices.Department;
 using usos.API.Application.Services;
 using usos.API.Application.Services.DegreeCourse;
+using usos.API.Application.Services.Department;
 using usos.API.Libraries;
 
 namespace usos.API
@@ -49,10 +51,10 @@ namespace usos.API
             services.AddTransient<IStudentService, StudentService>();
             services.AddTransient<IDeaneryWorkerService, DeaneryWorkerService>();
             services.AddTransient<IAdvertService, AdvertService>();
-
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<ILecturerService, LecturerService>();
             services.AddTransient<IDegreeCourseDictionaryService, DegreeCourseDictionaryService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
