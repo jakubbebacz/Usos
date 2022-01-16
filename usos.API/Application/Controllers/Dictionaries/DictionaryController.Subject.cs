@@ -14,7 +14,7 @@ namespace usos.API.Application.Controllers.Dictionaries
         [ProducesDefaultResponseType(typeof(PaginationResponse<DictionaryResponse>))]
         public async Task<IActionResult> GetDegreeCourses([FromQuery] SubjectPaginationRequest request)
         {
-            return Ok(await _degreeCourseDictionaryService.GetDegreeCourses(request));
+            return Ok(await _subjectService.GetSubjects(request));
         }
     }
 }

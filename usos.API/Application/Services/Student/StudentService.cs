@@ -75,6 +75,10 @@ namespace usos.API.Application.Services
             }
 
             var marks = student.StudentSubjects.Select(x => x.Marks);
+            if (marks == null)
+            {
+                throw new Exception("Marks were not found");
+            }
             return marks;
         }
 
