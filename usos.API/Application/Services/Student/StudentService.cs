@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,6 @@ namespace usos.API.Application.Services
                         StudentId = x.StudentId,
                         FirstName = x.FirstName,
                         Surname = x.Surname,
-                        GroupId = x.GroupId,
                         Email = x.Email,
                         IndexNumber = x.IndexNumber
                     })
@@ -65,12 +65,26 @@ namespace usos.API.Application.Services
             };
         }
 
+        public async Task<IEnumerable<double[]>> GetStudentMarks(Guid studentId)
+        {
+            var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
+            
+            if (student == null)
+            {
+                throw new Exception("Student was not found");
+            }
+
+            var marks = student.StudentSubjects.Select(x => x.Marks);
+            return marks;
+        }
+
         public async Task<Guid> CreateStudent(StudentRequest request)
         {
             var student = new Student
             {
                 FirstName = request.FirstName,
                 Surname = request.Surname,
+                GroupId = Guid.Parse("93449994-de91-4cbf-b78f-6b4302b8b07f"),
                 Email = request.Email,
                 IndexNumber = request.IndexNumber
             };

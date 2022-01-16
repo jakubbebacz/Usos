@@ -7,9 +7,6 @@ namespace usos.API.Application.Validators
     {
         public StudentRequestValidator()
         {
-            RuleFor(x => x.GroupId)
-                .NotEmpty();
-            
             RuleFor(x => x.FirstName)
                 .MaximumLength(50)
                 .NotEmpty();

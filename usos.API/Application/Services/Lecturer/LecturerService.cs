@@ -30,6 +30,11 @@ namespace usos.API.Application.Services
                     || x.Email.Contains(request.Phrase));
             }
 
+            if (request.DepartmentId != null)
+            {
+                query = query.Where(x => x.DepartmentId == request.DepartmentId);
+            }
+
             query = query.OrderByRequest(request.SortBy, request.SortDir);
 
             return new PaginationResponse<LecturerPaginationResponse>
