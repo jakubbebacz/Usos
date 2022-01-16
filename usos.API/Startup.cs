@@ -11,10 +11,12 @@ using usos.API.Application.IServices;
 using usos.API.Application.IServices.DegreeCourse;
 using usos.API.Application.IServices.Department;
 using usos.API.Application.IServices.Questionnarie;
+using usos.API.Application.IServices.Subject;
 using usos.API.Application.Services;
 using usos.API.Application.Services.DegreeCourse;
 using usos.API.Application.Services.Department;
 using usos.API.Application.Services.Questionnarie;
+using usos.API.Application.Services.Subject;
 using usos.API.Libraries;
 
 namespace usos.API
@@ -58,6 +60,7 @@ namespace usos.API
             services.AddTransient<IDegreeCourseDictionaryService, DegreeCourseDictionaryService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IQuestionnarieService, QuestionnarieService>();
+            services.AddTransient<ISubjectService, SubjectService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
