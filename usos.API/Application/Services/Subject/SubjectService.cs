@@ -1,6 +1,6 @@
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices.Subject;
 using usos.API.Application.Models;
 using usos.API.Application.Models.Subject;

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +16,6 @@ using usos.API.Application.Services.DegreeCourse;
 using usos.API.Application.Services.Department;
 using usos.API.Application.Services.Questionnarie;
 using usos.API.Application.Services.Subject;
-using usos.API.Libraries;
 
 namespace usos.API
 {
