@@ -37,6 +37,7 @@ namespace usos.API.Application.Services.Questionnarie
                 .Take(request.Take)
                 .Select(x => new QuestionnariePaginationResponse
                 {
+                    LecturerId = x.LecturerId,
                     LecturerName = x.Lecturer.FirstName + " " + x.Lecturer.Surname,
                     Note = x.Note,
                     Rating = x.Rating
