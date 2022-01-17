@@ -19,10 +19,10 @@ namespace usos.API.EntityTypeConfigurations
 
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.StudentSubjects)
-                .HasForeignKey(x => x.StudentId)
+                .HasForeignKey(x => x.SubjectId)
                 .IsRequired();
             
-            builder.Property(x => x.Marks)
+            builder.Property(x => x.Mark)
                 .HasMaxLength(100);
         }
     }

@@ -13,9 +13,11 @@ namespace usos.API.Application.IServices
 
         Task<StudentSubjectsResponse> GetStudentSubjects(Guid studentId);
 
-        Task<IEnumerable<double[]>> GetStudentMarks(Guid studentId);
+        Task<IEnumerable<double>> GetStudentMarks(Guid studentId);
 
         Task<Guid> CreateStudent(StudentRequest request);
+
+        Task<Guid> AddMark(StudentMarksRequest request);
 
         Task UpdateStudent(Guid studentId, StudentRequest request);
 

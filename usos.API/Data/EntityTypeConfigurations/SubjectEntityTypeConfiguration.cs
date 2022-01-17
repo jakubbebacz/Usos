@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using usos.API.Entities;
+using usos.API.Seeds;
 
 namespace usos.API.EntityTypeConfigurations
 {
@@ -19,6 +20,8 @@ namespace usos.API.EntityTypeConfigurations
             builder.Property(x => x.SubjectName)
                 .HasMaxLength(1000)
                 .IsRequired();
+            
+            builder.HasData(SubjectSeed.Seed());
         }
     }
 }

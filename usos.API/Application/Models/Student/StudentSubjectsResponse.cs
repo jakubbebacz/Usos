@@ -4,6 +4,6 @@ namespace usos.API.Application.Models
 {
     public class StudentSubjectsResponse
     {
-        public IList<Entities.Subject> Subjects { get; set; }
+        public IEnumerable<string> Subjects { get; set; }
     }
 }

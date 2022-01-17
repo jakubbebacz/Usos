@@ -14,6 +14,6 @@ namespace usos.API.Entities
         public Guid SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
         
-        public double[] Marks { get; set; }
+        public double Mark { get; set; }
     }
 }

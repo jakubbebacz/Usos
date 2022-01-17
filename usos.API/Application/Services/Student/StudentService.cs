@@ -7,6 +7,7 @@ using usos.API.Application.IServices;
 using usos.API.Application.Models;
 using usos.API.Entities;
 using usos.API.Extensions;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Services
 {
@@ -58,14 +59,14 @@ namespace usos.API.Application.Services
                 throw new Exception("Student was not found");
             }
             
-            var subjects = student.StudentSubjects.Select(x => x.Subject);
+            var subjects = student.StudentSubjects.Select(x => x.Subject.SubjectName);
             return new StudentSubjectsResponse
             {
-                Subjects = subjects.ToList()
+                Subjects = subjects
             };
         }
 
-        public async Task<IEnumerable<double[]>> GetStudentMarks(Guid studentId)
+        public async Task<IEnumerable<double>> GetStudentMarks(Guid studentId)
         {
             var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
             
@@ -74,7 +75,7 @@ namespace usos.API.Application.Services
                 throw new Exception("Student was not found");
             }
 
-            var marks = student.StudentSubjects.Select(x => x.Marks);
+            var marks = student.StudentSubjects.Select(x => x.Mark);
             if (marks == null)
             {
                 throw new Exception("Marks were not found");
@@ -88,7 +89,7 @@ namespace usos.API.Application.Services
             {
                 FirstName = request.FirstName,
                 Surname = request.Surname,
-                GroupId = Guid.Parse("93449994-de91-4cbf-b78f-6b4302b8b07f"),
+                GroupId = GroupSeed.GroupId,
                 Email = request.Email,
                 IndexNumber = request.IndexNumber
             };
@@ -96,6 +97,21 @@ namespace usos.API.Application.Services
             await _usosDbContext.AddAsync(student);
             await _usosDbContext.SaveChangesAsync();
             return student.StudentId;
+        }
+
+        public async Task<Guid> AddMark(StudentMarksRequest request)
+        {
+            var mark = new StudentSubject
+            {
+                StudentId = request.StudentId,
+                SubjectId = request.SubjectId,
+                Mark = request.Mark
+            };
+            
+            await _usosDbContext.AddAsync(mark);
+            await _usosDbContext.SaveChangesAsync();
+
+            return mark.StudentSubjectId;
         }
 
         public async Task UpdateStudent(Guid studentId, StudentRequest request)

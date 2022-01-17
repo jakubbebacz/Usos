@@ -56,6 +56,16 @@ namespace usos.API.Application.Controllers.Student
             return StatusCode(StatusCodes.Status201Created, studentId);
         }
         
+        [HttpPost("/mark")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType(typeof(Guid))]
+        public async Task<IActionResult> AddMark([FromBody] StudentMarksRequest request)
+        {
+            var markId = await _studentService.AddMark(request);
+            return StatusCode(StatusCodes.Status201Created, markId);
+        }
+        
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using usos.API.Entities;
+using usos.API.Seeds;
 
 namespace usos.API.EntityTypeConfigurations
 {
@@ -23,6 +24,8 @@ namespace usos.API.EntityTypeConfigurations
             builder.Property(x => x.Term)
                 .HasMaxLength(2)
                 .IsRequired();
+            
+            builder.HasData(GroupSeed.Seed());
         }
     }
 }
