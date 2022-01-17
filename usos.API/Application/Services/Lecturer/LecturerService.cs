@@ -52,6 +52,28 @@ namespace usos.API.Application.Services
                 TotalCount = await query.CountAsync()
             };
         }
+
+        public async Task<LecturerResponse> GetLecturer(Guid lecturerId)
+        {
+            var lecturer = await _usosDbContext.Lecturer
+                .FirstOrDefaultAsync(x => x.LecturerId == lecturerId);
+
+            if (lecturer == null)
+            {
+                throw new Exception("Lecturer was not found");
+            }
+
+            return new LecturerResponse
+            {
+                LecturerId = lecturer.LecturerId,
+                FirstName = lecturer.FirstName,
+                Surname = lecturer.Surname,
+                Email = lecturer.Email,
+                PhoneNumber = lecturer.PhoneNumber,
+                DepartmentId = lecturer.DepartmentId,
+                CardId = lecturer.CardId
+            };
+        }
         
         public async Task<Guid> CreateLecturer(LecturerRequest request)
         {

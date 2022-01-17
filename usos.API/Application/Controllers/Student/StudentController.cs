@@ -28,7 +28,7 @@ namespace usos.API.Application.Controllers.Student
             return Ok(await _studentService.GetStudents(request));
         }
         
-        [HttpGet("/{studentId:guid}/subjects")]
+        [HttpGet("{studentId:guid}/subjects")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(StudentSubjectsResponse))]
@@ -37,13 +37,22 @@ namespace usos.API.Application.Controllers.Student
             return Ok(await _studentService.GetStudentSubjects(studentId));
         }
         
-        [HttpGet("/{studentId:guid}/marks")]
+        [HttpGet("{studentId:guid}/marks")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(IEnumerable<double[]>))]
         public async Task<IActionResult> GetStudentMarks([FromRoute] Guid studentId)
         {
             return Ok(await _studentService.GetStudentMarks(studentId));
+        }
+        
+        [HttpGet("{studentId:guid}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType(typeof(StudentResponse))]
+        public async Task<IActionResult> GetStudent([FromRoute] Guid studentId)
+        {
+            return Ok(await _studentService.GetStudent(studentId));
         }
         
         [HttpPost]
@@ -56,7 +65,7 @@ namespace usos.API.Application.Controllers.Student
             return StatusCode(StatusCodes.Status201Created, studentId);
         }
         
-        [HttpPost("/mark")]
+        [HttpPost("mark")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
@@ -66,19 +75,19 @@ namespace usos.API.Application.Controllers.Student
             return StatusCode(StatusCodes.Status201Created, markId);
         }
         
-        [HttpPut]
+        [HttpPut("{studentId:guid}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateStudent([FromQuery] Guid studentId, [FromBody] StudentRequest request)
+        public async Task<IActionResult> UpdateStudent([FromRoute] Guid studentId, [FromBody] StudentRequest request)
         {
             await _studentService.UpdateStudent(studentId ,request);
             return StatusCode(StatusCodes.Status204NoContent);
         }
         
-        [HttpDelete]
+        [HttpDelete("{studentId:guid}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteStudent([FromQuery] Guid studentId)
+        public async Task<IActionResult> DeleteStudent([FromRoute] Guid studentId)
         {
             await _studentService.DeleteStudent(studentId);
             return StatusCode(StatusCodes.Status204NoContent);

@@ -83,6 +83,27 @@ namespace usos.API.Application.Services
             return marks;
         }
 
+        public async Task<StudentResponse> GetStudent(Guid studentId)
+        {
+            var student = await _usosDbContext.Student
+                .FirstOrDefaultAsync(x => x.StudentId == studentId);
+
+            if (student == null)
+            {
+                throw new Exception("Student was not found");
+            }
+
+            return new StudentResponse
+            {
+                StudentId = student.StudentId,
+                Email = student.Email,
+                FirstName = student.FirstName,
+                Surname = student.Surname,
+                GroupId = student.GroupId,
+                IndexNumber = student.IndexNumber
+            };
+        }
+
         public async Task<Guid> CreateStudent(StudentRequest request)
         {
             var student = new Student

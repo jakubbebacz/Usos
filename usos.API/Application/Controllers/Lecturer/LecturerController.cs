@@ -28,6 +28,15 @@ namespace usos.API.Application.Controllers.Lecturer
         {
             return Ok(await _lecturerService.GetLecturers(request));
         }
+        
+        [HttpGet("{lecturerId::guid}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType(typeof(LecturerResponse))]
+        public async Task<IActionResult> GetUsers([FromRoute] Guid lecturerId)
+        {
+            return Ok(await _lecturerService.GetLecturer(lecturerId));
+        }
 
         [HttpPost]
         [Produces("application/json")]

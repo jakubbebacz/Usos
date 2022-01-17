@@ -10,6 +10,9 @@ namespace usos.API.Application.IServices
     {
 
         Task<PaginationResponse<LecturerPaginationResponse>> GetLecturers(LecturerPaginationRequest request);
+
+        Task<LecturerResponse> GetLecturer(Guid lecturerId);
+
         Task<Guid> CreateLecturer(LecturerRequest request);
 
         Task<ResultCode> UpdateLecturer(Guid lecturerId, LecturerUpdateRequest request);
