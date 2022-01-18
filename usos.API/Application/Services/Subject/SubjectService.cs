@@ -21,6 +21,12 @@ namespace usos.API.Application.Services.Subject
         {
             var query = _usosDbContext.Subject.AsNoTracking();
 
+            if (!string.IsNullOrWhiteSpace(request.Phrase))
+            {
+                query = query.Where(x =>
+                    x.SubjectName.ToLower().Contains(request.Phrase.ToLower()));
+            }
+            
             if (request.DegreeCourseId != null)
             {
                 query = query.Where(x => x.DegreeCourseId == request.DegreeCourseId);
