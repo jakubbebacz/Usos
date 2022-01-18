@@ -20,7 +20,7 @@ namespace usos.API.Entities
         public bool IsPasswordChangeRequired { get; set; }
         
         public int IndexNumber { get; set; }
-        
+
         public int? Semester { get; set; }
 
         public ICollection<Application> Applications { get; set; }
