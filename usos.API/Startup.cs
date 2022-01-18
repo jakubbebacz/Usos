@@ -7,27 +7,34 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using usos.API.Application.IServices;
+using usos.API.Application.IServices.Auth;
+using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.IServices.DegreeCourse;
 using usos.API.Application.IServices.Department;
 using usos.API.Application.IServices.Questionnarie;
 using usos.API.Application.IServices.Subject;
 using usos.API.Application.Services;
+using usos.API.Application.Services.Auth;
+using usos.API.Application.Services.AuthHelpers;
 using usos.API.Application.Services.DegreeCourse;
 using usos.API.Application.Services.Department;
 using usos.API.Application.Services.Questionnarie;
 using usos.API.Application.Services.Subject;
+using usos.API.Configurations;
 
 namespace usos.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IConfiguration Configuration { get; }
+        public Startup()
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -37,7 +44,10 @@ namespace usos.API
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+
+            services.AddAuth(Configuration);
             
+            services.AddEmail(Configuration);
 
             services
                 .AddControllers()
@@ -59,6 +69,9 @@ namespace usos.API
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IQuestionnarieService, QuestionnarieService>();
             services.AddTransient<ISubjectService, SubjectService>();
+            services.AddTransient<ICryptService, CryptService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IAuthService, AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,7 +92,11 @@ namespace usos.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            
             app.UseAuthorization();
+            
+            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

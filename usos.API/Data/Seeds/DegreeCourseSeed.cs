@@ -14,7 +14,7 @@ namespace usos.API.Seeds
         public static readonly Guid EnvironmentalEngineering = Guid.Parse("8f915c86-b60d-493c-8f38-f2a3ce618a88");
         public static readonly Guid AutomationAndRobotics = Guid.Parse("06477e73-56c1-44b8-946e-04d8bece2fd3");
         public static readonly Guid Economy = Guid.Parse("6108aca7-e412-41cb-bb1e-02c1784b5c09");
-        public static readonly Guid Start = Guid.Parse("f7491277-0a07-49bb-b2fe-82987be9bfa7");
+        public static readonly Guid Start = Guid.Parse("ffffffff-ffff-ffff-ffff-fffffffffff0");
 
         public static IEnumerable<DegreeCourse> Seed()
         {

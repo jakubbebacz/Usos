@@ -7,6 +7,7 @@ using usos.API.Libraries;
 using Microsoft.EntityFrameworkCore;
 using usos.API.Application.Models;
 using usos.API.Extensions;
+using usos.API.Globals;
 
 namespace usos.API.Application.Services
 {
@@ -55,13 +56,10 @@ namespace usos.API.Application.Services
 
         public async Task<LecturerResponse> GetLecturer(Guid lecturerId)
         {
-            var lecturer = await _usosDbContext.Lecturer
-                .FirstOrDefaultAsync(x => x.LecturerId == lecturerId);
-
-            if (lecturer == null)
-            {
-                throw new Exception("Lecturer was not found");
-            }
+            await _usosDbContext.Lecturer
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.LecturerId == lecturerId);
+            var lecturer = await _usosDbContext.Lecturer.SingleAsync(x => x.LecturerId == lecturerId);
 
             return new LecturerResponse
             {
@@ -84,7 +82,9 @@ namespace usos.API.Application.Services
                 FirstName = request.FirstName,
                 Surname = request.Surname,
                 PhoneNumber = request.PhoneNumber,
-                Email = request.PhoneNumber
+                Email = request.PhoneNumber,
+                Password = string.Empty,
+                IsPasswordChangeRequired = true
             };
 
             await _usosDbContext.AddAsync(lecturer);

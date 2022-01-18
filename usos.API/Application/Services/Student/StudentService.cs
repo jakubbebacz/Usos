@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices;
+using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.Models;
 using usos.API.Entities;
 using usos.API.Extensions;
+using usos.API.Globals;
 using usos.API.Seeds;
 
 namespace usos.API.Application.Services
@@ -14,10 +16,12 @@ namespace usos.API.Application.Services
     public class StudentService : IStudentService
     {
         private readonly UsosDbContext _usosDbContext;
+        private readonly IEmailService _emailService;
 
-        public StudentService(UsosDbContext usosDbContext)
+        public StudentService(UsosDbContext usosDbContext, IEmailService emailService)
         {
             _usosDbContext = usosDbContext;
+            _emailService = emailService;
         }
 
         public async Task<PaginationResponse<StudentPaginationResponse>> GetStudents(StudentPaginationRequest request)
@@ -48,41 +52,40 @@ namespace usos.API.Application.Services
                         FirstName = x.FirstName,
                         Surname = x.Surname,
                         Email = x.Email,
-                        IndexNumber = x.IndexNumber
+                        IndexNumber = x.IndexNumber,
+                        GroupId = x.GroupId
                     })
                     .ToListAsync(),
                 TotalCount = await query.CountAsync()
             };
         }
 
-        public async Task<IQueryable<IEnumerable<string>>> GetStudentSubjects(Guid studentId)
+        public async Task<IEnumerable<string>> GetStudentSubjects(Guid studentId)
         {
-            var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
+            await _usosDbContext.Student
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.StudentId == studentId);
+            var student = await _usosDbContext.Student.SingleAsync(x => x.StudentId == studentId);
 
-            if (student == null)
-            {
-                throw new Exception("Student was not found");
-            }
+            var degreeCourseId = await _usosDbContext.Group
+                .AsNoTracking()
+                .Where(x => x.GroupId == student.GroupId)
+                .Select(x => x.DegreeCourseId).SingleAsync();
 
-            var subjects = _usosDbContext.Group.Where(x => x.GroupId == student.GroupId)
-                .Select(x => x.DegreeCourse.Subjects.Select(s => s.SubjectName));
-            
-            if (subjects == null)
-            {
-                throw new Exception("Subjects were not found");
-            }
+            var subjects = _usosDbContext.Subject
+                .AsNoTracking()
+                .Where(x => x.DegreeCourseId == degreeCourseId)
+                .Select(x => x.SubjectName);
 
             return subjects;
         }
 
         public async Task<IEnumerable<double>> GetStudentMarks(Guid studentId)
         {
-            var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
-            
-            if (student == null)
-            {
-                throw new Exception("Student was not found");
-            }
+            await _usosDbContext.Student
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.StudentId == studentId);
+            var student = await _usosDbContext.Student.SingleAsync(x => x.StudentId == studentId);
             
             var marks = _usosDbContext.StudentSubject.Where(x => x.StudentId == studentId).Select(x => x.Mark);
             if (marks == null)
@@ -94,13 +97,10 @@ namespace usos.API.Application.Services
 
         public async Task<StudentResponse> GetStudent(Guid studentId)
         {
-            var student = await _usosDbContext.Student
-                .FirstOrDefaultAsync(x => x.StudentId == studentId);
-
-            if (student == null)
-            {
-                throw new Exception("Student was not found");
-            }
+            await _usosDbContext.Student
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.StudentId == studentId);
+            var student = await _usosDbContext.Student.SingleAsync(x => x.StudentId == studentId);
 
             return new StudentResponse
             {
@@ -121,11 +121,16 @@ namespace usos.API.Application.Services
                 Surname = request.Surname,
                 GroupId = GroupSeed.GroupId,
                 Email = request.Email,
-                IndexNumber = request.IndexNumber
+                IndexNumber = request.IndexNumber,
+                Password = string.Empty,
+                IsPasswordChangeRequired = true
             };
 
             await _usosDbContext.AddAsync(student);
             await _usosDbContext.SaveChangesAsync();
+            
+            await _emailService.SendEmailWithSetPasswordUrl(student.Email, "Welcome!", student.StudentId);
+            
             return student.StudentId;
         }
 
@@ -146,13 +151,10 @@ namespace usos.API.Application.Services
 
         public async Task UpdateStudent(Guid studentId, StudentRequest request)
         {
-            var student = await _usosDbContext.Student
-                .FirstOrDefaultAsync(x => x.StudentId == studentId);
-
-            if (student == null)
-            {
-                throw new Exception("Student was not found");
-            }
+            await _usosDbContext.Student
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.StudentId == studentId);
+            var student = await _usosDbContext.Student.SingleAsync(x => x.StudentId == studentId);
 
             student.FirstName = request.FirstName;
             student.Surname = request.Surname;
@@ -163,13 +165,10 @@ namespace usos.API.Application.Services
 
         public async Task DeleteStudent(Guid studentId)
         {
-            var student = await _usosDbContext.Student
-                .FirstOrDefaultAsync(x => x.StudentId == studentId);
-
-            if (student == null)
-            {
-                throw new Exception("Student was not found");
-            }
+            await _usosDbContext.Student
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.StudentId == studentId);
+            var student = await _usosDbContext.Student.SingleAsync(x => x.StudentId == studentId);
 
             _usosDbContext.Student.Remove(student);
             await _usosDbContext.SaveChangesAsync();

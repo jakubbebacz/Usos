@@ -6,7 +6,7 @@ namespace usos.API.Seeds
 {
     public class RectorSeed
     {
-        public static readonly Guid RectorId = Guid.Parse("fa411b2a-47e3-4911-a726-7b52764df9cb");
+        public static readonly Guid RectorId = Guid.Parse("ffffffff-ffff-ffff-ffff-ffffffffffff");
         
         public static IEnumerable<Rector> Seed()
         {

@@ -6,7 +6,7 @@ namespace usos.API.Seeds
 {
     public class GroupSeed
     {
-        public static readonly Guid GroupId = Guid.Parse("60638ce5-7039-4021-b9a9-c04248a82b16");
+        public static readonly Guid GroupId = Guid.Parse("ffffffff-ffff-ffff-ffff-ffffffffffff");
         
         public static IEnumerable<Group> Seed()
         {

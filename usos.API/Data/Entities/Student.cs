@@ -16,7 +16,9 @@ namespace usos.API.Entities
         public string Email { get; set; }
         
         public string Password { get; set; }
-
+        
+        public bool IsPasswordChangeRequired { get; set; }
+        
         public int IndexNumber { get; set; }
         
         public int? Semester { get; set; }

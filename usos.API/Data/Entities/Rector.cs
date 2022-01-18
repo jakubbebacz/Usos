@@ -15,6 +15,10 @@ namespace usos.API.Entities
         
         public string PhoneNumber { get; set; }
         
+        public string Password { get; set; }
+        
+        public bool IsPasswordChangeRequired { get; set; }
+        
         public string Email { get; set; }
     }
 }

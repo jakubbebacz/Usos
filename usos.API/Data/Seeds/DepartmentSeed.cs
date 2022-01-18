@@ -11,7 +11,7 @@ namespace usos.API.Seeds
         public static readonly Guid WeAiI = Guid.Parse("d4761e62-c0d2-47c8-a950-fff434553807");
         public static readonly Guid WMiBM = Guid.Parse("c785da83-165c-4fb0-9c32-96e738324944");
         public static readonly Guid WZiMK = Guid.Parse("31b8df03-86b1-4d3a-a4aa-e1ff98220e90");
-        public static readonly Guid Start = Guid.Parse("7c0f6e4f-94ab-45d8-be3e-d70667559280");
+        public static readonly Guid Start = Guid.Parse("ffffffff-ffff-ffff-ffff-ffffffffff00");
 
         public static IEnumerable<Department> Seed()
         {

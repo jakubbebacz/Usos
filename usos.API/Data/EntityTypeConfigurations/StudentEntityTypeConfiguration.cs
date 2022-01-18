@@ -30,7 +30,10 @@ namespace usos.API.EntityTypeConfigurations
                 .IsRequired();
 
             builder.Property(x => x.Password)
-                .HasMaxLength(100);
+                .HasMaxLength(256);
+
+            builder.Property(x => x.IsPasswordChangeRequired)
+                .IsRequired();
 
             builder.Property(x => x.IndexNumber)
                 .HasMaxLength(10)

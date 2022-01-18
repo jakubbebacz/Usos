@@ -36,6 +36,9 @@ namespace usos.API.EntityTypeConfigurations
                 .HasMaxLength(100)
                 .IsRequired();
             
+            builder.Property(x => x.Password)
+                .HasMaxLength(256);
+
             builder.HasData(RectorSeed.Seed());
         }
     }

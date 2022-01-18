@@ -8,7 +8,10 @@
         <PackageReference Include="Autofac" Version="6.3.0" />
         <PackageReference Include="EFCore.NamingConventions" Version="5.0.2" />
         <PackageReference Include="FluentApiNet" Version="1.0.2" />
+        <PackageReference Include="FluentEmail.Razor" Version="3.0.0" />
+        <PackageReference Include="FluentEmail.Smtp" Version="3.0.0" />
         <PackageReference Include="FluentValidation" Version="10.3.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Antiforgery" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
@@ -26,6 +29,14 @@
       <Folder Include="Application\Validators\Lecturer" />
       <Folder Include="Application\Validators\Subject" />
       <Folder Include="Migrations" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Application\Templates\SetPasswordEmailTemplate.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Application\Templates\SetPasswordEmailTemplate.cshtml" />
     </ItemGroup>
 
 </Project>

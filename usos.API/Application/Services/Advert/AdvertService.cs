@@ -6,6 +6,7 @@ using usos.API.Application.IServices;
 using usos.API.Application.Models;
 using usos.API.Entities;
 using usos.API.Extensions;
+using usos.API.Globals;
 
 namespace usos.API.Application.Services
 {
@@ -22,6 +23,7 @@ namespace usos.API.Application.Services
         {
             var query = _usosDbContext.Advert.AsNoTracking();
             query = query.OrderByRequest(request.SortBy, request.SortDir);
+            
             return new PaginationResponse<AdvertPaginationResponse>
             {
                 List = await query.Skip(request.Skip)
@@ -54,13 +56,10 @@ namespace usos.API.Application.Services
 
         public async Task UpdateAdvert(Guid advertId, AdvertRequest request)
         {
-            var advert = await _usosDbContext.Advert
-                .FirstOrDefaultAsync(x => x.AdvertId == advertId);
-
-            if (advert == null)
-            {
-                throw new Exception("Deanery worker was not found");
-            }
+            await _usosDbContext.Advert
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.AdvertId == advertId);
+            var advert = await _usosDbContext.Advert.SingleAsync(x => x.AdvertId == advertId);
 
             advert.DeaneryWorkerId = request.DeaneryWorkerId;
             advert.Title = request.Title;
@@ -72,14 +71,11 @@ namespace usos.API.Application.Services
         
         public async Task DeleteAdvert(Guid advertId)
         {
-            var advert = await _usosDbContext.Advert
-                .FirstOrDefaultAsync(x => x.AdvertId == advertId);
-
-            if (advert == null)
-            {
-                throw new Exception("Deanery worker was not found");
-            }
-
+            await _usosDbContext.Advert
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.AdvertId == advertId);
+            var advert = await _usosDbContext.Advert.SingleAsync(x => x.AdvertId == advertId);
+            
             _usosDbContext.Advert.Remove(advert);
         }
     }

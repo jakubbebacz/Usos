@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
 using usos.API.Entities;
+using usos.API.Globals;
 
 namespace usos.API.Application.Services
 {
@@ -24,7 +25,9 @@ namespace usos.API.Application.Services
                 FirstName = request.FirstName,
                 Surname = request.Surname,
                 PhoneNumber = request.PhoneNumber,
-                Email = request.Email
+                Email = request.Email,
+                Password = string.Empty,
+                IsPasswordChangeRequired = true
             };
 
             await _usosDbContext.AddAsync(deaneryWorker);
@@ -34,13 +37,10 @@ namespace usos.API.Application.Services
 
         public async Task UpdateDeaneryWorker(Guid deaneryWorkerId, DeaneryWorkerRequest request)
         {
-            var deaneryWorker = await _usosDbContext.DeaneryWorker
-                    .FirstOrDefaultAsync(x => x.DeaneryWorkerId == deaneryWorkerId);
-
-            if (deaneryWorker == null)
-            {
-                throw new Exception("Deanery worker was not found");
-            }
+            await _usosDbContext.DeaneryWorker
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.DeaneryWorkerId == deaneryWorkerId);
+            var deaneryWorker = await _usosDbContext.DeaneryWorker.SingleAsync(x => x.DeaneryWorkerId == deaneryWorkerId);
 
             deaneryWorker.CardId = request.CardId?.Trim();
             deaneryWorker.FirstName = request.FirstName?.Trim();
@@ -53,13 +53,10 @@ namespace usos.API.Application.Services
 
         public async Task DeleteDeaneryWorker(Guid deaneryWorkerId)
         {
-            var deaneryWorker = await _usosDbContext.DeaneryWorker
-                .FirstOrDefaultAsync(x => x.DeaneryWorkerId == deaneryWorkerId);
-
-            if (deaneryWorker == null)
-            {
-                throw new Exception("Deanery worker was not found");
-            }
+            await _usosDbContext.DeaneryWorker
+                .AsNoTracking()
+                .IsAnyRuleAsync(x => x.DeaneryWorkerId == deaneryWorkerId);
+            var deaneryWorker = await _usosDbContext.DeaneryWorker.SingleAsync(x => x.DeaneryWorkerId == deaneryWorkerId);
 
             _usosDbContext.DeaneryWorker.Remove(deaneryWorker);
             await _usosDbContext.SaveChangesAsync();
