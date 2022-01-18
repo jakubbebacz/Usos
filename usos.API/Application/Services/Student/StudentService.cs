@@ -31,6 +31,11 @@ namespace usos.API.Application.Services
                     || x.Email.Contains(request.Phrase));
             }
 
+            if (request.GroupId != null)
+            {
+                query = query.Where(x => x.GroupId == request.GroupId);
+            }
+
             query = query.OrderByRequest(request.SortBy, request.SortDir);
 
             return new PaginationResponse<StudentPaginationResponse>
@@ -50,7 +55,7 @@ namespace usos.API.Application.Services
             };
         }
 
-        public async Task<StudentSubjectsResponse> GetStudentSubjects(Guid studentId)
+        public async Task<IQueryable<IEnumerable<string>>> GetStudentSubjects(Guid studentId)
         {
             var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
 
@@ -58,12 +63,16 @@ namespace usos.API.Application.Services
             {
                 throw new Exception("Student was not found");
             }
+
+            var subjects = _usosDbContext.Group.Where(x => x.GroupId == student.GroupId)
+                .Select(x => x.DegreeCourse.Subjects.Select(s => s.SubjectName));
             
-            var subjects = student.StudentSubjects.Select(x => x.Subject.SubjectName);
-            return new StudentSubjectsResponse
+            if (subjects == null)
             {
-                Subjects = subjects
-            };
+                throw new Exception("Subjects were not found");
+            }
+
+            return subjects;
         }
 
         public async Task<IEnumerable<double>> GetStudentMarks(Guid studentId)
@@ -74,8 +83,8 @@ namespace usos.API.Application.Services
             {
                 throw new Exception("Student was not found");
             }
-
-            var marks = student.StudentSubjects.Select(x => x.Mark);
+            
+            var marks = _usosDbContext.StudentSubject.Where(x => x.StudentId == studentId).Select(x => x.Mark);
             if (marks == null)
             {
                 throw new Exception("Marks were not found");

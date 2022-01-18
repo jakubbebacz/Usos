@@ -11,7 +11,7 @@ namespace usos.API.Application.IServices
     {
         Task<PaginationResponse<StudentPaginationResponse>> GetStudents(StudentPaginationRequest request);
 
-        Task<StudentSubjectsResponse> GetStudentSubjects(Guid studentId);
+        Task<IQueryable<IEnumerable<string>>> GetStudentSubjects(Guid studentId);
 
         Task<IEnumerable<double>> GetStudentMarks(Guid studentId);
 

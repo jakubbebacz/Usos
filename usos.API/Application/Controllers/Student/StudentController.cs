@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace usos.API.Application.Controllers.Student
         [HttpGet("{studentId:guid}/subjects")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType(typeof(StudentSubjectsResponse))]
+        [ProducesDefaultResponseType(typeof(IQueryable<IEnumerable<string>>))]
         public async Task<IActionResult> GetUsers([FromRoute] Guid studentId)
         {
             return Ok(await _studentService.GetStudentSubjects(studentId));
