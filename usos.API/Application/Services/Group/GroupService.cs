@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices;
@@ -30,6 +32,31 @@ namespace usos.API.Application.Services
             await _usosDbContext.SaveChangesAsync();
 
             return group.GroupId;
+        }
+
+        public async Task<IEnumerable<Guid>> AddStudentsToGroup(AddStudentsToGroupRequest request)
+        {
+            var group = await _usosDbContext.Group.FirstOrDefaultAsync(x => x.GroupId == request.GroupId);
+
+            if (group == null)
+            {
+                throw new Exception("Group was not found");
+            }
+            
+            foreach (var studentId in request.StudentsId)
+            {
+                var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
+                
+                if (student == null)
+                {
+                    throw new Exception("Student was not found");
+                }
+                
+                student.GroupId = group.GroupId;
+            }
+
+            await _usosDbContext.SaveChangesAsync();
+            return group.Students.Select(x => x.StudentId);
         }
 
         public async Task<ResultCode> UpdateGroup(Guid groupId, GroupUpdateRequest request)

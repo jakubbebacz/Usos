@@ -29,8 +29,18 @@ namespace usos.API.Application.Controllers.Group
             var groupId = await _groupService.CreateGroup(request);
             return StatusCode(StatusCodes.Status201Created, groupId);
         }
+        
+        [HttpPut("/students")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType(typeof(Guid))]
+        public async Task<IActionResult> AddStudentsToGroup([FromBody] AddStudentsToGroupRequest request)
+        {
+            var studentsId = await _groupService.AddStudentsToGroup(request);
+            return StatusCode(StatusCodes.Status201Created, studentsId);
+        }
 
-        [HttpPut("{groupId}")]
+        [HttpPut("{groupId:guid}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateGroup(Guid groupId, [FromBody] GroupUpdateRequest request)
