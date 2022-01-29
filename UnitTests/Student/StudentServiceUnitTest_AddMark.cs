@@ -1,8 +1,8 @@
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using usos.API.Application.Models;
-using usos.API.Entities;
 using Xunit;
 
 namespace UnitTests.Student
@@ -24,11 +24,11 @@ namespace UnitTests.Student
             
             Assert.IsType<Guid>(response);
 
-            // var studentSubject = await _context.StudentSubject
-            //     .AsNoTracking()
-            //     .SingleAsync(x => x.StudentSubjectId == response);
+            var studentSubject = _context.StudentSubject
+                .AsNoTracking()
+                .Single(x => x.StudentSubjectId == response);
             
-            // Assert.Equal(4,studentSubject.Mark);
+            Assert.Equal(4,studentSubject.Mark);
         }
     }
 }

@@ -29,14 +29,14 @@ namespace UnitTests.Student
                         DegreeCourse = new DegreeCourse
                         {
                             DegreeCourseId = degreeCourseId,
-                            Subjects = new List<Subject>
+                            Subjects = new List<usos.API.Entities.Subject>
                             {
-                                new Subject
+                                new usos.API.Entities.Subject
                                 {
                                     SubjectId = Guid.NewGuid(),
                                     SubjectName = "test1"
                                 },
-                                new Subject
+                                new usos.API.Entities.Subject
                                 {
                                     SubjectId = Guid.NewGuid(),
                                     SubjectName = "test2"

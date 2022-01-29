@@ -35,9 +35,9 @@ namespace UnitTests.Student
                 },
             };
             
-            _context.Database.EnsureDeleted();
-            _context.Student.AddRange(students);
-            _context.SaveChanges();
+            await _context.Database.EnsureDeletedAsync();
+            await _context.Student.AddRangeAsync(students);
+            await _context.SaveChangesAsync();
             
             var response = await  _studentService.GetStudent(studentId);
             

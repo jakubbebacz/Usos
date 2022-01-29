@@ -159,6 +159,7 @@ namespace usos.API.Application.Services
             student.FirstName = request.FirstName;
             student.Surname = request.Surname;
             student.Email = request.Email;
+            student.IndexNumber = request.IndexNumber;
 
             await _usosDbContext.SaveChangesAsync();
         }
