@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ using usos.API.Application.Services.Department;
 using usos.API.Application.Services.Questionnarie;
 using usos.API.Application.Services.Subject;
 using usos.API.Configurations;
+using usos.API.Extensions;
 
 namespace usos.API
 {
@@ -59,6 +61,12 @@ namespace usos.API
                     .UseNpgsql(Configuration.GetConnectionString("UsosDbConnectionString"))
                     .UseSnakeCaseNamingConvention()
             );
+            
+            services.AddFluentValidation(opt =>
+            {
+                opt.RegisterValidatorsFromAssembly(typeof(IUsosApp).Assembly);
+                opt.ValidatorOptions.PropertyNameResolver = (type, info, arg3) => info?.Name.ToCamelCase();
+            });
             
             services.AddTransient<IStudentService, StudentService>();
             services.AddTransient<IDeaneryWorkerService, DeaneryWorkerService>();
