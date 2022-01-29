@@ -23,30 +23,30 @@ namespace usos.API.Application.Services.Auth
         public async Task<(string userId, string email, string roleId)> Login(LoginRequest request)
         {
             var student = await _usosDbContext.Student.SingleOrDefaultAsync(x => x.Email == request.Email);
-            if (student != null)
+            if (student != null && student.Password == request.Password)
             {
                 return (student.StudentId.ToString(), student.Email, student.RoleId.ToString());
             }
             
             var lecturer = await _usosDbContext.Lecturer.SingleOrDefaultAsync(x => x.Email == request.Email);
-            if (lecturer != null)
+            if (lecturer != null && lecturer.Password == request.Password)
             {
                 return (lecturer.LecturerId.ToString(), lecturer.Email, lecturer.RoleId.ToString());
             }
             
             var deaneryWorker = await _usosDbContext.DeaneryWorker.SingleOrDefaultAsync(x => x.Email == request.Email);
-            if (deaneryWorker != null)
+            if (deaneryWorker != null && deaneryWorker.Password == request.Password)
             {
                 return (deaneryWorker.DeaneryWorkerId.ToString(), deaneryWorker.Email, deaneryWorker.RoleId.ToString());
             }
             
             var rector = await _usosDbContext.Rector.SingleOrDefaultAsync(x => x.Email == request.Email);
-            if (rector != null)
+            if (rector != null && rector.Password == request.Password)
             {
                 return (rector.RectorId.ToString(), rector.Email, rector.RoleId.ToString());
             }
 
-            throw new BusinessNotFoundException("User was not found");
+            throw new BusinessNotFoundException("Wrong email/password");
         }
 
         public async Task SetPassword(Guid userId,
