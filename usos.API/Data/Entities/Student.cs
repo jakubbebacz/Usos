@@ -7,6 +7,9 @@ namespace usos.API.Entities
     {
         public Guid StudentId { get; set; }
         
+        public Guid RoleId { get; set; }
+        public virtual Role Role { get; set; }
+        
         public Guid GroupId { get; set; }
         public virtual Group Group { get; set; }
         public string FirstName { get; set; }

@@ -15,6 +15,7 @@ namespace usos.API.Seeds
                 new()
                 {
                     RectorId = RectorId,
+                    RoleId = RoleSeed.Rector,
                     CardId = "000000",
                     FirstName = "Admin",
                     Surname = "Admin",

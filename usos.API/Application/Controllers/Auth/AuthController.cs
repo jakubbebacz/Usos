@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices.Auth;
 using usos.API.Application.Models.Auth;
+using usos.API.Configurations;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.Auth
 {
@@ -27,13 +29,14 @@ namespace usos.API.Application.Controllers.Auth
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var (userId, email) = await _authService.Login(request);
+            var (userId, email, roleId) = await _authService.Login(request);
 
             var claims = new List<Claim>
             {
                 new (ClaimTypes.NameIdentifier, userId),
                 new (ClaimTypes.Name, email),
                 new (ClaimTypes.Email, email),
+                new (ClaimTypes.Role, roleId)
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -45,6 +48,7 @@ namespace usos.API.Application.Controllers.Auth
         }
         
         [HttpPost("logout")]
+        [HasRoles(RoleSeed.StudentId, RoleSeed.RectorId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Logout()
