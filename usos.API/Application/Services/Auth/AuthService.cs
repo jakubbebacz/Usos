@@ -1,6 +1,6 @@
 using System;
-using System.Data.Entity;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices.Auth;
 using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.Models.Auth;
