@@ -34,29 +34,98 @@ namespace usos.API.Seeds
         {
             return new List<Subject>
             {
-                new() {SubjectId = HistoryOfTownArchitecture, SubjectName = "Historia architektury miast", DegreeCourseId = DegreeCourseSeed.Architecture},
-                new() {SubjectId = DescriptiveGeometry, SubjectName = "Geometria opisowa", DegreeCourseId = DegreeCourseSeed.Architecture},
-                new() {SubjectId = FreehandDrawing, SubjectName = "Rysunek odręczny", DegreeCourseId = DegreeCourseSeed.Architecture},
-                new() {SubjectId = Mathematics, SubjectName = "Matematyka", DegreeCourseId = DegreeCourseSeed.CivilEngineering},
-                new() {SubjectId = Physics, SubjectName = "Fizyka", DegreeCourseId = DegreeCourseSeed.CivilEngineering},
-                new() {SubjectId = Chemistry, SubjectName = "Chemia", DegreeCourseId = DegreeCourseSeed.CivilEngineering},
-                new() {SubjectId = BasicsOfProgramming, SubjectName = "Podstawy programowania", DegreeCourseId = DegreeCourseSeed.Informatics},
-                new() {SubjectId = BasicsOfSoftwareEngineering, SubjectName = "Podstawy inżynierii programowania", DegreeCourseId = DegreeCourseSeed.Informatics},
-                new() {SubjectId = Algorithms, SubjectName = "Algorytmy", DegreeCourseId = DegreeCourseSeed.Informatics},
-                new() {SubjectId = WirelessNetworks, SubjectName = "Sieci bezprzewodowe", DegreeCourseId = DegreeCourseSeed.Teleinformatics},
-                new() {SubjectId = SystemSecurity, SubjectName = "Bezpieczeństwo systemów", DegreeCourseId = DegreeCourseSeed.Teleinformatics},
-                new() {SubjectId = Geomathics, SubjectName = "Geomatematyka", DegreeCourseId = DegreeCourseSeed.Teleinformatics},
-                new() {SubjectId = EngineeringGeodesy, SubjectName = "Geodezja inżynieryjna", DegreeCourseId = DegreeCourseSeed.GeodesyAndCartography},
-                new() {SubjectId = Cartography, SubjectName = "Kartografia", DegreeCourseId = DegreeCourseSeed.GeodesyAndCartography},
-                new() {SubjectId = Biology, SubjectName = "Biologia", DegreeCourseId = DegreeCourseSeed.GeodesyAndCartography},
-                new() {SubjectId = Hydraulics, SubjectName = "Hydraulika", DegreeCourseId = DegreeCourseSeed.EnvironmentalEngineering},
-                new() {SubjectId = FluidMechanics, SubjectName = "Mechanika płynów", DegreeCourseId = DegreeCourseSeed.EnvironmentalEngineering},
-                new() {SubjectId = Electrotechnics, SubjectName = "Elektrotechnika", DegreeCourseId = DegreeCourseSeed.EnvironmentalEngineering},
-                new() {SubjectId = Automation, SubjectName = "Automatyka", DegreeCourseId = DegreeCourseSeed.AutomationAndRobotics},
-                new() {SubjectId = Metrology, SubjectName = "Metrologia", DegreeCourseId = DegreeCourseSeed.AutomationAndRobotics},
-                new() {SubjectId = DescriptiveStatistics, SubjectName = "Statystyka deskrypcyjna", DegreeCourseId = DegreeCourseSeed.AutomationAndRobotics},
-                new() {SubjectId = Accountancy, SubjectName = "Rachunkowość", DegreeCourseId = DegreeCourseSeed.Economy},
-                new() {SubjectId = Macroeconomics, SubjectName = "Makroekonomia", DegreeCourseId = DegreeCourseSeed.Economy}
+                new()
+                {
+                    SubjectId = HistoryOfTownArchitecture, SubjectName = "Historia architektury miast", DegreeCourseId = DegreeCourseSeed.Architecture, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = DescriptiveGeometry, SubjectName = "Geometria opisowa", DegreeCourseId = DegreeCourseSeed.Architecture, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = FreehandDrawing, SubjectName = "Rysunek odręczny", DegreeCourseId = DegreeCourseSeed.Architecture, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Mathematics, SubjectName = "Matematyka", DegreeCourseId = DegreeCourseSeed.CivilEngineering, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Physics, SubjectName = "Fizyka", DegreeCourseId = DegreeCourseSeed.CivilEngineering, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Chemistry, SubjectName = "Chemia", DegreeCourseId = DegreeCourseSeed.CivilEngineering, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = BasicsOfProgramming, SubjectName = "Podstawy programowania", DegreeCourseId = DegreeCourseSeed.Informatics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = BasicsOfSoftwareEngineering, SubjectName = "Podstawy inżynierii programowania", DegreeCourseId = DegreeCourseSeed.Informatics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Algorithms, SubjectName = "Algorytmy", DegreeCourseId = DegreeCourseSeed.Informatics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = WirelessNetworks, SubjectName = "Sieci bezprzewodowe", DegreeCourseId = DegreeCourseSeed.Teleinformatics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = SystemSecurity, SubjectName = "Bezpieczeństwo systemów", DegreeCourseId = DegreeCourseSeed.Teleinformatics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Geomathics, SubjectName = "Geomatematyka", DegreeCourseId = DegreeCourseSeed.Teleinformatics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = EngineeringGeodesy, SubjectName = "Geodezja inżynieryjna", DegreeCourseId = DegreeCourseSeed.GeodesyAndCartography, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Cartography, SubjectName = "Kartografia", DegreeCourseId = DegreeCourseSeed.GeodesyAndCartography, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Biology, SubjectName = "Biologia", DegreeCourseId = DegreeCourseSeed.GeodesyAndCartography, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Hydraulics, SubjectName = "Hydraulika", DegreeCourseId = DegreeCourseSeed.EnvironmentalEngineering, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = FluidMechanics, SubjectName = "Mechanika płynów", DegreeCourseId = DegreeCourseSeed.EnvironmentalEngineering, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Electrotechnics, SubjectName = "Elektrotechnika", DegreeCourseId = DegreeCourseSeed.EnvironmentalEngineering, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Automation, SubjectName = "Automatyka", DegreeCourseId = DegreeCourseSeed.AutomationAndRobotics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Metrology, SubjectName = "Metrologia", DegreeCourseId = DegreeCourseSeed.AutomationAndRobotics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = DescriptiveStatistics, SubjectName = "Statystyka deskrypcyjna", DegreeCourseId = DegreeCourseSeed.AutomationAndRobotics, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Accountancy, SubjectName = "Rachunkowość", DegreeCourseId = DegreeCourseSeed.Economy, SubjectSemester = 1
+                },
+                new()
+                {
+                    SubjectId = Macroeconomics, SubjectName = "Makroekonomia", DegreeCourseId = DegreeCourseSeed.Economy, SubjectSemester = 1
+                }
             };
         }
     }

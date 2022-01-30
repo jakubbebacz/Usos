@@ -53,6 +53,7 @@ namespace usos.API.Application.Services
                 }
                 
                 student.GroupId = group.GroupId;
+                student.Semester = group.Term;
             }
 
             await _usosDbContext.SaveChangesAsync();

@@ -12,7 +12,7 @@ namespace usos.API.Application.Controllers.Group
 {
 
     [ApiController]
-    [HasRoles(RoleSeed.DeaneryWorkerId)]
+    [HasRoles(RoleSeed.DeaneryWorkerId, RoleSeed.RectorId)]
     [Route("api/groups")]
     public class GroupController : ControllerBase
     {

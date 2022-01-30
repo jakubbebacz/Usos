@@ -63,7 +63,6 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpPost]
-        [HasRoles(RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
@@ -74,7 +73,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpPost("mark")]
-        [HasRoles(RoleSeed.LecturerId)]
+        [HasRoles(RoleSeed.LecturerId, RoleSeed.RectorId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
