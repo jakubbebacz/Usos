@@ -47,9 +47,9 @@ namespace usos.API.Application.Controllers.Student
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(IEnumerable<double[]>))]
-        public async Task<IActionResult> GetStudentMarks([FromRoute] Guid studentId)
+        public async Task<IActionResult> GetStudentMarks([FromRoute] Guid studentId, [FromQuery] int semester)
         {
-            return Ok(await _studentService.GetStudentMarks(studentId));
+            return Ok(await _studentService.GetStudentMarks(studentId, semester));
         }
         
         [HttpGet("{studentId:guid}")]

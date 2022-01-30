@@ -79,8 +79,9 @@ namespace usos.API.Application.Services
 
             return subjects;
         }
+        
 
-        public async Task<List<StudentMarksResponse>> GetStudentMarks(Guid studentId)
+        public async Task<List<StudentMarksResponse>> GetStudentMarks(Guid studentId, int semester = 0)
         {
             await _usosDbContext.Student
                 .AsNoTracking()
@@ -92,8 +93,19 @@ namespace usos.API.Application.Services
                 .Select(x => x.DegreeCourseId)
                 .SingleAsync();
 
-            var subjects = await _usosDbContext.Subject
-                .Where(x => x.SubjectSemester == student.Semester && x.DegreeCourseId == dgId).ToListAsync();
+            List<Entities.Subject> subjects;
+
+            if (semester == 0)
+            {
+                subjects = await _usosDbContext.Subject
+                    .Where(x => x.SubjectSemester == student.Semester && x.DegreeCourseId == dgId).ToListAsync();
+            }
+            else
+            {
+                subjects = await _usosDbContext.Subject
+                    .Where(x => x.SubjectSemester == semester && x.DegreeCourseId == dgId).ToListAsync();
+            }
+            
 
             var response = new List<StudentMarksResponse>();
 

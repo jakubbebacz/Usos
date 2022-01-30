@@ -13,7 +13,7 @@ namespace usos.API.Application.IServices
 
         Task<IEnumerable<string>> GetStudentSubjects(Guid studentId);
 
-        Task<List<StudentMarksResponse>> GetStudentMarks(Guid studentId);
+        Task<List<StudentMarksResponse>> GetStudentMarks(Guid studentId, int semester = 0);
 
         Task<StudentResponse> GetStudent(Guid studentId);
 
