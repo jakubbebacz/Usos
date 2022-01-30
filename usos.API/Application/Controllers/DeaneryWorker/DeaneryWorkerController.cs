@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
+using usos.API.Configurations;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.DeaneryWorker
 {
     [ApiController]
+    [HasRoles(RoleSeed.RectorId)]
     [Route("/api/deaneryWorkers")]
     public class DeaneryWorkerController : ControllerBase
     {

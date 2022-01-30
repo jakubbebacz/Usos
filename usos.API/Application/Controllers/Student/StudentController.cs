@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
+using usos.API.Configurations;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.Student
 {
@@ -21,6 +23,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpGet]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(PaginationResponse<StudentPaginationResponse>))]
@@ -30,6 +33,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpGet("{studentId:guid}/subjects")]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(IQueryable<IEnumerable<string>>))]
@@ -39,6 +43,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpGet("{studentId:guid}/marks")]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(IEnumerable<double[]>))]
@@ -48,6 +53,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpGet("{studentId:guid}")]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(StudentResponse))]
@@ -57,6 +63,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpPost]
+        [HasRoles(RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
@@ -67,6 +74,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpPost("mark")]
+        [HasRoles(RoleSeed.LecturerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
@@ -77,6 +85,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpPut("{studentId:guid}")]
+        [HasRoles(RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateStudent([FromRoute] Guid studentId, [FromBody] StudentRequest request)
@@ -86,6 +95,7 @@ namespace usos.API.Application.Controllers.Student
         }
         
         [HttpDelete("{studentId:guid}")]
+        [HasRoles(RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteStudent([FromRoute] Guid studentId)

@@ -12,6 +12,11 @@ namespace usos.API.EntityTypeConfigurations
             builder.HasKey(x => x.RectorId);
             builder.Property(x => x.RectorId)
                 .IsRequired();
+            
+            builder.HasOne(x => x.Role)
+                .WithMany(x => x.Rector)
+                .HasForeignKey(x => x.RoleId)
+                .IsRequired();
 
             builder.Property(x => x.CardId)
                 .HasMaxLength(50)

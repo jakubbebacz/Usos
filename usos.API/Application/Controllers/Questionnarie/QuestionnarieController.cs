@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices.Questionnarie;
 using usos.API.Application.Models;
 using usos.API.Application.Models.Questionnarie;
+using usos.API.Configurations;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.Questionnarie
 {
@@ -20,6 +22,7 @@ namespace usos.API.Application.Controllers.Questionnarie
         }
         
         [HttpGet]
+        [HasRoles(RoleSeed.RectorId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(PaginationResponse<QuestionnariePaginationResponse>))]
@@ -29,6 +32,7 @@ namespace usos.API.Application.Controllers.Questionnarie
         }
         
         [HttpPost]
+        [HasRoles(RoleSeed.StudentId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]

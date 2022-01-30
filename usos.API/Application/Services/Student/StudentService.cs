@@ -118,6 +118,7 @@ namespace usos.API.Application.Services
             var student = new Student
             {
                 FirstName = request.FirstName,
+                RoleId = RoleSeed.Student,
                 Surname = request.Surname,
                 GroupId = GroupSeed.GroupId,
                 Email = request.Email,

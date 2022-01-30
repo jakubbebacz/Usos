@@ -20,33 +20,33 @@ namespace usos.API.Application.Services.Auth
             _cryptService = cryptService;
         }
 
-        public async Task<(string userId, string email)> Login(LoginRequest request)
+        public async Task<(string userId, string email, string roleId)> Login(LoginRequest request)
         {
             var student = await _usosDbContext.Student.SingleOrDefaultAsync(x => x.Email == request.Email);
             if (student != null)
             {
-                return (student.StudentId.ToString(), student.Email);
+                return (student.StudentId.ToString(), student.Email, student.RoleId.ToString());
             }
             
             var lecturer = await _usosDbContext.Lecturer.SingleOrDefaultAsync(x => x.Email == request.Email);
             if (lecturer != null)
             {
-                return (lecturer.LecturerId.ToString(), lecturer.Email);
+                return (lecturer.LecturerId.ToString(), lecturer.Email, lecturer.RoleId.ToString());
             }
             
             var deaneryWorker = await _usosDbContext.DeaneryWorker.SingleOrDefaultAsync(x => x.Email == request.Email);
             if (deaneryWorker != null)
             {
-                return (deaneryWorker.DeaneryWorkerId.ToString(), deaneryWorker.Email);
+                return (deaneryWorker.DeaneryWorkerId.ToString(), deaneryWorker.Email, deaneryWorker.RoleId.ToString());
             }
             
             var rector = await _usosDbContext.Rector.SingleOrDefaultAsync(x => x.Email == request.Email);
             if (rector != null)
             {
-                return (rector.RectorId.ToString(), rector.Email);
+                return (rector.RectorId.ToString(), rector.Email, rector.RoleId.ToString());
             }
 
-            throw new BusinessNotFoundException("User was not found");
+            throw new BusinessNotFoundException("Wrong email/password");
         }
 
         public async Task SetPassword(Guid userId,
