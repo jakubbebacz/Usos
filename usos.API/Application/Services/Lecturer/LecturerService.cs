@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using usos.API.Application.Models;
 using usos.API.Extensions;
 using usos.API.Globals;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Services
 {
@@ -78,6 +79,7 @@ namespace usos.API.Application.Services
             var lecturer = new Entities.Lecturer
             {
                 DepartmentId = request.DepartmentId,
+                RoleId = RoleSeed.Lecturer,
                 CardId = request.CardId,
                 FirstName = request.FirstName,
                 Surname = request.Surname,

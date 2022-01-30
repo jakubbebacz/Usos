@@ -22,7 +22,7 @@ namespace usos.API.Application.Validators
 
             RuleFor(x => x.IndexNumber)
                 .GreaterThan(0)
-                .LessThanOrEqualTo(999999999)
+                .LessThanOrEqualTo(9999999)
                 .NotEmpty();
         }
     }

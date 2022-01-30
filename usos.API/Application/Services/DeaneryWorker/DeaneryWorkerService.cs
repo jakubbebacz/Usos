@@ -5,6 +5,7 @@ using usos.API.Application.IServices;
 using usos.API.Application.Models;
 using usos.API.Entities;
 using usos.API.Globals;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Services
 {
@@ -22,6 +23,7 @@ namespace usos.API.Application.Services
             var deaneryWorker = new DeaneryWorker
             {
                 CardId = request.CardId,
+                RoleId = RoleSeed.DeaneryWorker,
                 FirstName = request.FirstName,
                 Surname = request.Surname,
                 PhoneNumber = request.PhoneNumber,
