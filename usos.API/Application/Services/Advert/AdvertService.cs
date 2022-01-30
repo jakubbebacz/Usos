@@ -77,6 +77,7 @@ namespace usos.API.Application.Services
             var advert = await _usosDbContext.Advert.SingleAsync(x => x.AdvertId == advertId);
             
             _usosDbContext.Advert.Remove(advert);
+            await _usosDbContext.SaveChangesAsync();
         }
     }
 }

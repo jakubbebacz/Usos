@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using usos.API.Application.IServices;
+using usos.API.Application.IServices.Application;
 using usos.API.Application.IServices.Auth;
 using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.IServices.DegreeCourse;
@@ -15,6 +16,7 @@ using usos.API.Application.IServices.Department;
 using usos.API.Application.IServices.Questionnarie;
 using usos.API.Application.IServices.Subject;
 using usos.API.Application.Services;
+using usos.API.Application.Services.Application;
 using usos.API.Application.Services.Auth;
 using usos.API.Application.Services.AuthHelpers;
 using usos.API.Application.Services.DegreeCourse;
@@ -80,6 +82,7 @@ namespace usos.API
             services.AddTransient<ICryptService, CryptService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IApplicationService, ApplicationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

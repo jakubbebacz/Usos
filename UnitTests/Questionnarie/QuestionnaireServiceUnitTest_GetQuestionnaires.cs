@@ -10,7 +10,6 @@ namespace UnitTests.Questionnarie
 {
     public partial class QuestionnaireServiceUnitTest
     {
-        [Fact]
         public async Task ReturnAllQuestionnaires_WhenGetQuestionnaires()
         {
             var questionnaires = new[]
