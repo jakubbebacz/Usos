@@ -6,6 +6,7 @@ namespace UnitTests.Lecturer
 {
     public partial class LecturerServiceUnitTest
     {
+        [Fact]
         public async Task ShouldReturnLecturer_WhenGetLecturer()
         {
             var lecturerId = Guid.NewGuid();

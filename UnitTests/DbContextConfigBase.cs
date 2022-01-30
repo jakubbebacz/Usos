@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using usos.API;
 
@@ -10,7 +11,7 @@ namespace UnitTests
         public DbContextConfigBase()
         {
             var options = new DbContextOptionsBuilder<UsosDbContext>()
-                .UseInMemoryDatabase(databaseName: "usos")
+                .UseInMemoryDatabase(databaseName: $"usos-{Guid.NewGuid()}")
                 .Options;
             
             _context = new UsosDbContext(options);
