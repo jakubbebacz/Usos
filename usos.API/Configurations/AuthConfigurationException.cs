@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,7 @@ namespace usos.API.Configurations
                 option.ExpireTimeSpan = TimeSpan.Parse(configuration["Auth:CookieExpirationTimeSpan"]);
                 option.Events.OnRedirectToLogin = UnAuthorizedResponse;
                 option.Events.OnRedirectToAccessDenied = AccessDeniedResponse;
+                option.Cookie.SameSite = SameSiteMode.None;
             });
 
             return services;
