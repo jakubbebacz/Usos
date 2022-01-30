@@ -9,5 +9,7 @@ namespace usos.API.Application.IServices.Auth
         Task<(string userId, string email, string roleId)> Login(LoginRequest request);
 
         Task SetPassword(Guid userId, string token, SetPasswordRequest request);
+
+        Task<CurrentUserResponse> GetCurrentUser();
     }
 }

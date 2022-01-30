@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices.Auth;
 using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.Models.Auth;
+using usos.API.Configurations;
 using usos.API.Globals;
 
 namespace usos.API.Application.Services.Auth
@@ -12,12 +13,15 @@ namespace usos.API.Application.Services.Auth
     {
         private readonly UsosDbContext _usosDbContext;
         private readonly ICryptService _cryptService;
+        private readonly IHttpContextExtendAccessor _httpContextExtendAccessor;
 
         public AuthService(UsosDbContext usosDbContext,
-            ICryptService cryptService)
+            ICryptService cryptService,
+            IHttpContextExtendAccessor httpContextExtendAccessor)
         {
             _usosDbContext = usosDbContext;
             _cryptService = cryptService;
+            _httpContextExtendAccessor = httpContextExtendAccessor;
         }
 
         public async Task<(string userId, string email, string roleId)> Login(LoginRequest request)
@@ -94,6 +98,41 @@ namespace usos.API.Application.Services.Auth
             type.User.IsPasswordChangeRequired = false;
             
             await _usosDbContext.SaveChangesAsync();
+        }
+
+        public async Task<CurrentUserResponse> GetCurrentUser()
+        {
+            var response = new CurrentUserResponse();
+            
+            var student = await _usosDbContext.Student.SingleOrDefaultAsync(x => x.StudentId == _httpContextExtendAccessor.UserId);
+            if (student != null)
+            {
+                response.UserId = student.StudentId;
+                response.RoleId = student.RoleId;
+            }
+            
+            var lecturer = await _usosDbContext.Lecturer.SingleOrDefaultAsync(x => x.LecturerId == _httpContextExtendAccessor.UserId);
+            if (lecturer != null)
+            {
+                response.UserId = lecturer.LecturerId;
+                response.RoleId = lecturer.RoleId;
+            }
+            
+            var deaneryWorker = await _usosDbContext.DeaneryWorker.SingleOrDefaultAsync(x => x.DeaneryWorkerId == _httpContextExtendAccessor.UserId);
+            if (deaneryWorker != null)
+            {
+                response.UserId = deaneryWorker.DeaneryWorkerId;
+                response.RoleId = deaneryWorker.RoleId;
+            }
+            
+            var rector = await _usosDbContext.Rector.SingleOrDefaultAsync(x => x.RectorId == _httpContextExtendAccessor.UserId);
+            if (rector != null)
+            {
+                response.UserId = rector.RectorId;
+                response.RoleId = rector.RoleId;
+            }
+
+            return response;
         }
     }
 }
