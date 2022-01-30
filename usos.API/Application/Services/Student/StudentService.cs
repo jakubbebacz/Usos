@@ -80,19 +80,50 @@ namespace usos.API.Application.Services
             return subjects;
         }
 
-        public async Task<IEnumerable<double>> GetStudentMarks(Guid studentId)
+        public async Task<List<StudentMarksResponse>> GetStudentMarks(Guid studentId)
         {
             await _usosDbContext.Student
                 .AsNoTracking()
                 .IsAnyRuleAsync(x => x.StudentId == studentId);
             var student = await _usosDbContext.Student.SingleAsync(x => x.StudentId == studentId);
-            
-            var marks = _usosDbContext.StudentSubject.Where(x => x.StudentId == studentId).Select(x => x.Mark);
-            if (marks == null)
+
+            var dgId = await _usosDbContext.Group
+                .Where(x => x.GroupId == student.GroupId)
+                .Select(x => x.DegreeCourseId)
+                .SingleAsync();
+
+            var subjects = await _usosDbContext.Subject
+                .Where(x => x.SubjectSemester == student.Semester && x.DegreeCourseId == dgId).ToListAsync();
+
+            var response = new List<StudentMarksResponse>();
+
+            foreach (var subject in subjects)
             {
-                throw new Exception("Marks were not found");
+                var result = 0.00m;
+                var marks = _usosDbContext.StudentSubject
+                    .Where(x => x.StudentId == studentId && x.SubjectId == subject.SubjectId).Select(x => x.Mark);
+                if (await marks.AnyAsync())
+                {
+                    var finalMark = await marks.AverageAsync();
+                    var x = Convert.ToDecimal(finalMark);
+                    var i = (int) decimal.Truncate(x);
+                    var first2DecimalPlaces = (int)(x % 1) * 100;
+                    result = first2DecimalPlaces switch
+                    {
+                        < 26 => i,
+                        < 76 => Convert.ToDecimal(i + 0.5),
+                        _ => i + 1
+                    };
+                }
+
+                response.Add(new StudentMarksResponse
+                {
+                    SubjectName = subject.SubjectName,
+                    Mark = result
+                });
             }
-            return marks;
+            
+            return response;
         }
 
         public async Task<StudentResponse> GetStudent(Guid studentId)

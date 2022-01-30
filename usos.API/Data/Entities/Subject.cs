@@ -11,7 +11,8 @@ namespace usos.API.Entities
         public virtual DegreeCourse DegreeCourse { get; set; }
         
         public string SubjectName { get; set; }
-        
+
+        public int SubjectSemester { get; set; }
         public virtual ICollection<LecturerGroup> LecturerGroups { get; set; }
         
         public ICollection<StudentSubject> StudentSubjects { get; set; }

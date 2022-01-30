@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -25,7 +24,6 @@ namespace usos.API.Application.Validators.Auth
 
             RuleFor(l => l.Password)
                 .MaximumLength(250)
-                .MinimumLength(6)
                 .NotEmpty()
                 .MustAsync(IsPasswordEqual)
                 .WithMessage("Incorrect credentials");
@@ -35,11 +33,31 @@ namespace usos.API.Application.Validators.Auth
             string password,
             CancellationToken cancellationToken)
         {
-            var userPassword = await _usosDbContext.Student
-                .AsNoTracking()
-                .Where(x => x.Email == request.Email)
-                .Select(x => x.Password)
-                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            var userPassword = "";
+            
+            var student = await _usosDbContext.Student.SingleOrDefaultAsync(x => x.Email == request.Email);
+            if (student != null)
+            {
+                userPassword = student.Password;
+            }
+            
+            var lecturer = await _usosDbContext.Lecturer.SingleOrDefaultAsync(x => x.Email == request.Email);
+            if (lecturer != null)
+            {
+                userPassword = lecturer.Password;
+            }
+            
+            var deaneryWorker = await _usosDbContext.DeaneryWorker.SingleOrDefaultAsync(x => x.Email == request.Email);
+            if (deaneryWorker != null)
+            {
+                userPassword = deaneryWorker.Password;
+            }
+            
+            var rector = await _usosDbContext.Rector.SingleOrDefaultAsync(x => x.Email == request.Email);
+            if (rector != null)
+            {
+                userPassword = rector.Password;
+            }
 
             return userPassword == _cryptService.EncryptPassword(password);
         }
