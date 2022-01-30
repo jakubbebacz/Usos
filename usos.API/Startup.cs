@@ -31,6 +31,7 @@ namespace usos.API
     public class Startup
     {
         private IConfiguration Configuration { get; }
+
         public Startup()
         {
             Configuration = new ConfigurationBuilder()
@@ -38,7 +39,7 @@ namespace usos.API
                 .AddEnvironmentVariables()
                 .Build();
         }
-        
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -50,7 +51,7 @@ namespace usos.API
             }));
 
             services.AddAuth(Configuration);
-            
+
             services.AddEmail(Configuration);
 
             services
@@ -63,13 +64,13 @@ namespace usos.API
                     .UseNpgsql(Configuration.GetConnectionString("UsosDbConnectionString"))
                     .UseSnakeCaseNamingConvention()
             );
-            
+
             services.AddFluentValidation(opt =>
             {
                 opt.RegisterValidatorsFromAssembly(typeof(IUsosApp).Assembly);
                 opt.ValidatorOptions.PropertyNameResolver = (type, info, arg3) => info?.Name.ToCamelCase();
             });
-            
+
             services.AddTransient<IStudentService, StudentService>();
             services.AddTransient<IDeaneryWorkerService, DeaneryWorkerService>();
             services.AddTransient<IAdvertService, AdvertService>();
@@ -88,25 +89,22 @@ namespace usos.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "usos.API v1");
-                    c.RoutePrefix = "";
-                });
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "usos.API v1");
+                c.RoutePrefix = "";
+            });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthentication();
-            
+
             app.UseAuthorization();
-            
+
             app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
