@@ -49,7 +49,7 @@ namespace usos.API
                     .AllowAnyHeader();
             }));
 
-            services.AddAuth(Configuration);
+            services.AddAuth(Configuration); 
 
             services.AddEmail(Configuration);
 
@@ -83,6 +83,8 @@ namespace usos.API
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IApplicationService, ApplicationService>();
+
+            services.AddSingleton<IHttpContextExtendAccessor, HttpContextExtendAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

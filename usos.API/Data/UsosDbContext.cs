@@ -1,12 +1,21 @@
 using Microsoft.EntityFrameworkCore;
+using usos.API.Configurations;
 using usos.API.Entities;
 
 namespace usos.API
 {
     public class UsosDbContext : DbContext
     {
+        private readonly IHttpContextExtendAccessor _httpContextExtendAccessor;
+
         public UsosDbContext(DbContextOptions<UsosDbContext> dbContextOptions) : base(dbContextOptions)
         {
+        }
+
+        public UsosDbContext(DbContextOptions<UsosDbContext> dbContextOptions,
+            IHttpContextExtendAccessor httpContextExtendAccessor) : base(dbContextOptions)
+        {
+            _httpContextExtendAccessor = httpContextExtendAccessor;
         }
 
         public virtual DbSet<Department> Department { get; set; }

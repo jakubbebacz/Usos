@@ -23,6 +23,7 @@ namespace usos.API.Application.Controllers.Application
         }
 
         [HttpGet("{applicationId::guid}")]
+        [HasRoles(RoleSeed.DeaneryWorkerId, RoleSeed.StudentId, RoleSeed.RectorId, RoleSeed.LecturerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(ApplicationResponse))]
@@ -33,6 +34,7 @@ namespace usos.API.Application.Controllers.Application
         }
 
         [HttpGet]
+        [HasRoles(RoleSeed.DeaneryWorkerId, RoleSeed.StudentId, RoleSeed.RectorId, RoleSeed.LecturerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(PaginationResponse<ApplicationPaginationResponse>))]
@@ -44,6 +46,7 @@ namespace usos.API.Application.Controllers.Application
 
         
         [HttpPost]
+        [HasRoles(RoleSeed.StudentId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]

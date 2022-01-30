@@ -5,17 +5,21 @@ using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices.Application;
 using usos.API.Application.Models;
 using usos.API.Application.Models.Application;
+using usos.API.Configurations;
 using usos.API.Globals;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Services.Application
 {
     public class ApplicationService : IApplicationService
     {
         private readonly UsosDbContext _usosDbContext;
+        private readonly IHttpContextExtendAccessor _httpContextExtendAccessor;
 
-        public ApplicationService(UsosDbContext usosDbContext)
+        public ApplicationService(UsosDbContext usosDbContext, IHttpContextExtendAccessor httpContextExtendAccessor)
         {
             _usosDbContext = usosDbContext;
+            _httpContextExtendAccessor = httpContextExtendAccessor;
         }
 
         public async Task<ApplicationResponse> GetSingleApplication(Guid applicationId)
@@ -41,6 +45,11 @@ namespace usos.API.Application.Services.Application
         public async Task<PaginationResponse<ApplicationPaginationResponse>> GetApplications(ApplicationPaginationRequest request)
         {
             var query = _usosDbContext.Application.AsNoTracking();
+
+            if (_httpContextExtendAccessor.RoleId == RoleSeed.Student)
+            {
+                query = query.Where(x => x.StudentId == _httpContextExtendAccessor.UserId);
+            }
 
             if (request.StudentId.HasValue)
             {
