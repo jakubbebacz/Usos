@@ -22,7 +22,7 @@ namespace UnitTests.Student
                 {
                     StudentId = studentId,
                     GroupId = groupId,
-                    Group = new Group
+                    Group = new usos.API.Entities.Group
                     {
                         GroupId = groupId,
                         DegreeCourseId = degreeCourseId,
