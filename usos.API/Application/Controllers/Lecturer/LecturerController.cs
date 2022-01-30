@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
 using usos.API.Application.Models.Lecturer;
+using usos.API.Configurations;
 using usos.API.Libraries;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.Lecturer
 {
@@ -21,6 +23,7 @@ namespace usos.API.Application.Controllers.Lecturer
         }
         
         [HttpGet]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(PaginationResponse<LecturerPaginationResponse>))]
@@ -30,6 +33,7 @@ namespace usos.API.Application.Controllers.Lecturer
         }
         
         [HttpGet("{lecturerId::guid}")]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(LecturerResponse))]
@@ -39,6 +43,7 @@ namespace usos.API.Application.Controllers.Lecturer
         }
 
         [HttpPost]
+        [HasRoles(RoleSeed.RectorId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
@@ -49,6 +54,7 @@ namespace usos.API.Application.Controllers.Lecturer
         }
         
         [HttpPut("{lecturerId:guid}")]
+        [HasRoles(RoleSeed.RectorId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateLecturer(Guid lecturerId, [FromBody] LecturerUpdateRequest request)
@@ -57,6 +63,7 @@ namespace usos.API.Application.Controllers.Lecturer
             return res == ResultCode.NotFound ? NotFound() : StatusCode(StatusCodes.Status204NoContent);        }
         
         [HttpDelete("{lecturerId:guid}")]
+        [HasRoles(RoleSeed.RectorId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteLecturer(Guid lecturerId)

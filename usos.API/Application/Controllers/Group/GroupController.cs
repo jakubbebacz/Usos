@@ -4,12 +4,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models.Group;
+using usos.API.Configurations;
 using usos.API.Libraries;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.Group
 {
 
     [ApiController]
+    [HasRoles(RoleSeed.DeaneryWorkerId)]
     [Route("api/groups")]
     public class GroupController : ControllerBase
     {

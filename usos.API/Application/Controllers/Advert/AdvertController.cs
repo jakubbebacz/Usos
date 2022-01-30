@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
 using usos.API.Application.Models;
+using usos.API.Configurations;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.Advert
 {
@@ -19,6 +21,7 @@ namespace usos.API.Application.Controllers.Advert
         }
 
         [HttpGet]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.DeaneryWorkerId, RoleSeed.LecturerId, RoleSeed.StudentId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType(typeof(PaginationResponse<AdvertPaginationResponse>))]
@@ -28,6 +31,7 @@ namespace usos.API.Application.Controllers.Advert
         }
 
         [HttpPost]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
@@ -38,6 +42,7 @@ namespace usos.API.Application.Controllers.Advert
         }
         
         [HttpPut]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateAdvert([FromQuery] Guid advertId, [FromBody] AdvertRequest request)
@@ -47,6 +52,7 @@ namespace usos.API.Application.Controllers.Advert
         }
         
         [HttpDelete]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.DeaneryWorkerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAdvert([FromQuery] Guid advertId)

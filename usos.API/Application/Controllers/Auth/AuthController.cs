@@ -48,7 +48,7 @@ namespace usos.API.Application.Controllers.Auth
         }
         
         [HttpPost("logout")]
-        [HasRoles(RoleSeed.StudentId, RoleSeed.RectorId)]
+        [HasRoles(RoleSeed.StudentId, RoleSeed.RectorId, RoleSeed.DeaneryWorkerId, RoleSeed.LecturerId)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Logout()

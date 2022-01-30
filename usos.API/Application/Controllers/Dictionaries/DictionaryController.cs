@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices.DegreeCourse;
 using usos.API.Application.IServices.Department;
 using usos.API.Application.IServices.Subject;
+using usos.API.Configurations;
+using usos.API.Seeds;
 
 namespace usos.API.Application.Controllers.Dictionaries
 {
     [Route("api/dictionaries")]
+    [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
     [ApiController]
     public partial class DictionariesController : ControllerBase
     {
