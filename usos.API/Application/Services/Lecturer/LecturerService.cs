@@ -84,7 +84,7 @@ namespace usos.API.Application.Services
                 FirstName = request.FirstName,
                 Surname = request.Surname,
                 PhoneNumber = request.PhoneNumber,
-                Email = request.PhoneNumber,
+                Email = request.Email,
                 Password = string.Empty,
                 IsPasswordChangeRequired = true
             };
