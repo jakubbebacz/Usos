@@ -5,6 +5,7 @@ using usos.API.Application.IServices;
 using usos.API.Application.Models.Lecturer;
 using usos.API.Libraries;
 using Microsoft.EntityFrameworkCore;
+using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.Models;
 using usos.API.Extensions;
 using usos.API.Globals;
@@ -15,10 +16,12 @@ namespace usos.API.Application.Services
     public class LecturerService : ILecturerService
     {
         private readonly UsosDbContext _usosDbContext;
+        private readonly IEmailService _emailService;
 
-        public LecturerService(UsosDbContext usosDbContext)
+        public LecturerService(UsosDbContext usosDbContext, IEmailService emailService)
         {
             _usosDbContext = usosDbContext;
+            _emailService = emailService;
         }
 
         public async Task<PaginationResponse<LecturerPaginationResponse>> GetLecturers(LecturerPaginationRequest request)
@@ -91,6 +94,8 @@ namespace usos.API.Application.Services
 
             await _usosDbContext.AddAsync(lecturer);
             await _usosDbContext.SaveChangesAsync();
+            
+            await _emailService.SendEmailWithSetPasswordUrl(lecturer.Email, "Welcome!", lecturer.LecturerId);
 
             return lecturer.LecturerId;
         }

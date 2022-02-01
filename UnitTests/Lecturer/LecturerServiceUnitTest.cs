@@ -1,4 +1,6 @@
+using NSubstitute;
 using usos.API.Application.IServices;
+using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.Services;
 
 namespace UnitTests.Lecturer
@@ -9,7 +11,8 @@ namespace UnitTests.Lecturer
         
         public LecturerServiceUnitTest()
         {
-            _lecturerService = new LecturerService(_context);
+            var emailService = Substitute.For<IEmailService>();
+            _lecturerService = new LecturerService(_context, emailService);
         }
     }
 }
