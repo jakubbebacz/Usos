@@ -30,7 +30,7 @@ namespace usos.API.Application.Services.AuthHelpers
             var email = _fluentEmail
                 .To(receiver)
                 .Subject(subject)
-                .Body("https://localhost:5001/api/"+url);
+                .Body("http://localhost:3000/"+url);
             await email.SendAsync();
         }
     }

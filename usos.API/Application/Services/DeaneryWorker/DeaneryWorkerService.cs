@@ -2,6 +2,7 @@ using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using usos.API.Application.IServices;
+using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.Models;
 using usos.API.Entities;
 using usos.API.Globals;
@@ -12,10 +13,12 @@ namespace usos.API.Application.Services
     public class DeaneryWorkerService : IDeaneryWorkerService
     {
         private readonly UsosDbContext _usosDbContext;
-        
-        public DeaneryWorkerService(UsosDbContext usosDbContext)
+        private readonly IEmailService _emailService;
+
+        public DeaneryWorkerService(UsosDbContext usosDbContext, IEmailService emailService)
         {
             _usosDbContext = usosDbContext;
+            _emailService = emailService;
         }
 
         public async Task<Guid> CreateDeaneryWorker(DeaneryWorkerRequest request)
@@ -34,6 +37,9 @@ namespace usos.API.Application.Services
 
             await _usosDbContext.AddAsync(deaneryWorker);
             await _usosDbContext.SaveChangesAsync();
+            
+            await _emailService.SendEmailWithSetPasswordUrl(deaneryWorker.Email, "Welcome!", deaneryWorker.DeaneryWorkerId);
+            
             return deaneryWorker.DeaneryWorkerId;
         }
 
