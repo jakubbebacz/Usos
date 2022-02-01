@@ -9,7 +9,7 @@ namespace UnitTests.Student
 {
     public partial class StudentServiceUnitTest
     {
-        [Fact]
+        
         public async Task ShouldReturnSubjects_When_GivenGuid()
         {
             var studentId = Guid.NewGuid();
