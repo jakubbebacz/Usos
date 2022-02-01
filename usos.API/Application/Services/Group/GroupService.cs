@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices;
+using usos.API.Application.Models;
 using usos.API.Application.Models.Group;
 using usos.API.Entities;
 using usos.API.Libraries;
@@ -18,6 +19,31 @@ namespace usos.API.Application.Services
         {
             _usosDbContext = usosDbContext;
         }
+
+        public async Task<PaginationResponse<GroupPaginationResponse>> GetGroups(GroupPaginationRequest request)
+        {
+            var query = _usosDbContext.Group.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(request.Phrase))
+            {
+                query = query.Where(x => (x.Name.ToLower().Contains(request.Phrase)));
+            }
+
+            return new PaginationResponse<GroupPaginationResponse>
+            {
+                List = await query.Skip(request.Skip)
+                    .Take(request.Take)
+                    .Select(x => new GroupPaginationResponse
+                    {
+                        Name = x.Name,
+                        Term = x.Term,
+                        GroupId = x.GroupId,
+                        DegreeCourseId = x.DegreeCourseId
+                    }).ToListAsync(),
+                TotalCount = await query.CountAsync()
+            };
+        }
+
 
         public async Task<Guid> CreateGroup(GroupRequest request)
         {

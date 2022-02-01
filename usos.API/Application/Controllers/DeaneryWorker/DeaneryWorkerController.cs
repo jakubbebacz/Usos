@@ -20,6 +20,16 @@ namespace usos.API.Application.Controllers.DeaneryWorker
         {
             _deaneryWorkerService = deaneryWorkerService;
         }
+
+        [HttpGet]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.DeaneryWorkerId)]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType(typeof(PaginationResponse<DeaneryWorkerPaginationResponse>))]
+        public async Task<IActionResult> GetDeaneryWorkers([FromQuery] DeaneryWorkerPaginationRequest request)
+        {
+            return Ok(await _deaneryWorkerService.GetDeaneryWorkers(request));
+        }
         
         [HttpPost]
         [Produces("application/json")]
