@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using usos.API.Application.IServices;
+using usos.API.Application.Models;
 using usos.API.Application.Models.Group;
 using usos.API.Configurations;
 using usos.API.Libraries;
@@ -21,6 +22,16 @@ namespace usos.API.Application.Controllers.Group
         public GroupController(IGroupService groupService)
         {
             _groupService = groupService;
+        }
+
+        [HttpGet]
+        [HasRoles(RoleSeed.RectorId, RoleSeed.StudentId, RoleSeed.LecturerId, RoleSeed.DeaneryWorkerId)]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType(typeof(PaginationResponse<GroupPaginationResponse>))]
+        public async Task<IActionResult> GetGroups([FromQuery] GroupPaginationRequest request)
+        {
+            return Ok(await _groupService.GetGroups(request));
         }
 
         [HttpPost]
