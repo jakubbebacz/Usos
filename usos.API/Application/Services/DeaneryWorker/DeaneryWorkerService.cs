@@ -1,6 +1,8 @@
 using System;
-using System.Data.Entity;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using usos.API.Application.IServices;
 using usos.API.Application.IServices.AuthHelpers;
 using usos.API.Application.Models;
@@ -19,6 +21,33 @@ namespace usos.API.Application.Services
         {
             _usosDbContext = usosDbContext;
             _emailService = emailService;
+        }
+
+        public async Task<PaginationResponse<DeaneryWorkerPaginationResponse>> GetDeaneryWorkers(DeaneryWorkerPaginationRequest request)
+        {
+            var query = _usosDbContext.DeaneryWorker.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(request.Phrase))
+            {
+                query = query.Where(x => (x.FirstName + " " + x.Surname).ToLower().Contains(request.Phrase.ToLower()));
+            }
+
+            return new PaginationResponse<DeaneryWorkerPaginationResponse>
+            {
+                List = await query.Skip(request.Skip)
+                    .Take(request.Take)
+                    .Select(x => new DeaneryWorkerPaginationResponse
+                    {
+                        Email = x.Email,
+                        Surname = x.Surname,
+                        CardId = x.CardId,
+                        FirstName = x.FirstName,
+                        PhoneNumber = x.PhoneNumber,
+                        DeaneryWorkerId = x.DeaneryWorkerId
+                    })
+                    .ToListAsync(),
+                TotalCount = await query.CountAsync()
+            };
         }
 
         public async Task<Guid> CreateDeaneryWorker(DeaneryWorkerRequest request)
