@@ -37,10 +37,10 @@ namespace usos.API.Application.Controllers.Group
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType(typeof(Guid))]
-        public async Task<IActionResult> AddStudentsToGroup([FromBody] AddStudentsToGroupRequest request)
+        public async Task<IActionResult> AddStudentToGroup([FromBody] AddStudentsToGroupRequest request)
         {
-            var studentsId = await _groupService.AddStudentsToGroup(request);
-            return StatusCode(StatusCodes.Status201Created, studentsId);
+            var studentId = await _groupService.AddStudentToGroup(request);
+            return StatusCode(StatusCodes.Status201Created, studentId);
         }
 
         [HttpPut("{groupId:guid}")]

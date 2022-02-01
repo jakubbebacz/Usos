@@ -11,7 +11,7 @@ namespace usos.API.Application.IServices
     {
         Task<Guid> CreateGroup(GroupRequest request);
         
-        Task<IEnumerable<Guid>> AddStudentsToGroup(AddStudentsToGroupRequest request);
+        Task<Guid> AddStudentToGroup(AddStudentsToGroupRequest request);
 
         Task<ResultCode> UpdateGroup(Guid groupId, GroupUpdateRequest request);
 

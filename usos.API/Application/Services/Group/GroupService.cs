@@ -18,7 +18,7 @@ namespace usos.API.Application.Services
         {
             _usosDbContext = usosDbContext;
         }
-        
+
         public async Task<Guid> CreateGroup(GroupRequest request)
         {
             var group = new Group
@@ -34,7 +34,7 @@ namespace usos.API.Application.Services
             return group.GroupId;
         }
 
-        public async Task<IEnumerable<Guid>> AddStudentsToGroup(AddStudentsToGroupRequest request)
+        public async Task<Guid> AddStudentToGroup(AddStudentsToGroupRequest request)
         {
             var group = await _usosDbContext.Group.FirstOrDefaultAsync(x => x.GroupId == request.GroupId);
 
@@ -43,21 +43,18 @@ namespace usos.API.Application.Services
                 throw new Exception("Group was not found");
             }
             
-            foreach (var studentId in request.StudentsId)
+            var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == request.StudentId);
+
+            if (student == null)
             {
-                var student = await _usosDbContext.Student.FirstOrDefaultAsync(x => x.StudentId == studentId);
-                
-                if (student == null)
-                {
-                    throw new Exception("Student was not found");
-                }
-                
-                student.GroupId = group.GroupId;
-                student.Semester = group.Term;
+                throw new Exception("Student was not found");
             }
 
+            student.GroupId = group.GroupId;
+            student.Semester = group.Term;
+
             await _usosDbContext.SaveChangesAsync();
-            return group.Students.Select(x => x.StudentId);
+            return student.StudentId;
         }
 
         public async Task<ResultCode> UpdateGroup(Guid groupId, GroupUpdateRequest request)
